@@ -1,0 +1,121 @@
+/* Las páginas de comprobación. No se publican y no comparten estilo con el
+   juego a propósito: si una comprobación se pareciera a una pantalla del juego,
+   acabaría leyéndose como una pantalla del juego. */
+
+:root {
+  color-scheme: light dark;
+  --tinta: #1b1b1b;
+  --papel: #fdfdfb;
+  --apagado: #5a5a52;
+  --linea: #d5d5cc;
+  --bien: #1c6b3a;
+  --mal: #9c1f1f;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --tinta: #ececea;
+    --papel: #17171a;
+    --apagado: #9a9a94;
+    --linea: #34343a;
+    --bien: #6fcf97;
+    --mal: #ef6b6b;
+  }
+}
+
+body {
+  margin: 0 auto;
+  padding: 1.5rem 1.25rem 3rem;
+  max-width: 54rem;
+  background: var(--papel);
+  color: var(--tinta);
+  font: 1rem/1.55 system-ui, -apple-system, 'Segoe UI', sans-serif;
+}
+
+h1 {
+  font-size: 1.35rem;
+  margin: 0 0 0.75rem;
+}
+
+h2 {
+  font-size: 1.05rem;
+  margin: 2rem 0 0.5rem;
+}
+
+p {
+  color: var(--apagado);
+  margin: 0 0 0.75rem;
+  max-width: 46rem;
+}
+
+code {
+  font-family: ui-monospace, 'Cascadia Code', Consolas, monospace;
+  font-size: 0.9em;
+}
+
+pre {
+  margin: 1.25rem 0 0;
+  padding: 1rem;
+  border: 1px solid var(--linea);
+  border-radius: 6px;
+  background: color-mix(in srgb, var(--tinta) 4%, var(--papel));
+  font-family: ui-monospace, 'Cascadia Code', Consolas, monospace;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  overflow-x: auto;
+}
+
+pre[data-estado='pasa'] {
+  border-color: var(--bien);
+}
+
+pre[data-estado='no-pasa'] {
+  border-color: var(--mal);
+}
+
+/* Los teléfonos de mentira de pantalla.html. No forman parte de la medición:
+   están para poder mirar con los ojos lo que los números acaban de decir. */
+
+#marcos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+  align-items: flex-start;
+}
+
+.marco {
+  margin: 0;
+}
+
+.marco iframe {
+  display: block;
+  border: 1px solid var(--linea);
+  border-radius: 10px;
+  background: var(--papel);
+}
+
+.marco figcaption {
+  margin-top: 0.4rem;
+  color: var(--apagado);
+  font-size: 0.78rem;
+}
+
+/* El taller de dibujos.html. Los símbolos pintados grandes, con su caja de
+   40 × 40 marcada detrás: lo que la medición dice en números, a la vista. */
+
+.taller {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: flex-start;
+}
+
+.taller svg {
+  width: 120px;
+  height: 120px;
+  color: var(--tinta);
+  border: 1px solid var(--linea);
+  border-radius: 6px;
+  background: var(--papel);
+}

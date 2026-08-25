@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Marco de medición</title>
+    <!-- Un teléfono de mentira. Este marco no tiene ni lógica ni estilo propio:
+         solo la hoja del juego y el mismo `#juego` que index.html, para que
+         `100dvh` y las unidades `vh` midan lo que mide el marco.
+
+         Es lo que hace posible medir un móvil de 320 px, que Chrome no da como
+         ventana: no baja de 500 px de ancho. Ver herramientas/navegador.py. -->
+    <link rel="stylesheet" href="../css/armario.css" />
+  </head>
+  <body>
+    <div id="juego" tabindex="-1"></div>
+  </body>
+</html>

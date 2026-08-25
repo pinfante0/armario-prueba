@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>¿Cabe en un teléfono, y no se escapa nada?</title>
+    <link rel="stylesheet" href="pruebas.css" />
+  </head>
+  <body>
+    <h1>¿Cabe en un teléfono, y no se escapa nada?</h1>
+
+    <p>
+      Dos reglas del proyecto, medidas sobre todos los tableros de verdad y en cuatro tamaños de
+      móvil. La primera es que <strong>ninguna pantalla se desplaza</strong>, con suelo en 320 px de
+      ancho. La segunda es que de <code>web/datos/</code>
+      <strong>solo sale a la pantalla el campo <code>nombre</code></strong>: ni la clasificación de
+      una pieza, ni su diapositiva, ni el <code>revisar</code>, que es una duda del profesor escrita
+      en primera persona. El contrato lo decía desde la Fase 1 y no lo comprobaba nada, porque no
+      había pantalla que comprobar.
+    </p>
+    <p>
+      Cada tamaño es un marco de ese tamaño exacto, y no una ventana: Chrome no da ventanas de menos
+      de 500 px de ancho, así que pedírselas daría una medición que parece buena y no lo es. La corre
+      sola <code>python herramientas/comprobar_pantalla.py</code>.
+    </p>
+
+    <pre id="informe">Midiendo…</pre>
+
+    <h2>Los marcos, tal y como se han medido</h2>
+    <p>
+      Aquí abajo queda el último tablero que se midió en cada tamaño. No forma parte de la
+      comprobación: está para poder mirar con los ojos lo que los números acaban de decir.
+    </p>
+    <div id="marcos"></div>
+
+    <script type="module" src="pantalla.js"></script>
+  </body>
+</html>

@@ -1,0 +1,145 @@
+{
+  "_": "La forma de un tablero. Un tablero no se guarda: se genera desde una plantilla y una semilla.",
+  "_contrato": "docs/contrato_datos.md",
+  "_aviso": "Cada pareja plantilla+semilla tiene que dar un tablero con solucion, y una sola. Lo demuestra herramientas/resolver.py --todos, y ninguna semilla llega al juego sin pasar por ahi.",
+  "_solo_del_temario": "Si es true, el tablero solo usa piezas con 'dia', o sea del Tema 7. Es lo que deja meter el piano y el organo en el catalogo sin que un tablero de entrada examine de lo que no se dio en clase.",
+  "_recambio": "El sistema con el que se vuelven a rotular las baldas cuando el tablero ya esta ordenado. Las baldas son las mismas y no cambian de tamano, asi que el mismo monton tiene que agruparse en los mismos tamanos por los dos sistemas: eso es lo que enumera formas_de_recambio() y lo que deja la segunda vuelta sin monton, o sea a base de intercambios. Con 'recambio' hay un eje y los rotulos son visibles: una balda sin nombre no puede cambiar de nombre.",
+  "_hs-arbol": "El sistema del nivel 2. Una balda no es una clase entera sino un prefijo del codigo de Hornbostel-Sachs, y una pieza va a la balda mas concreta que la admita. No es una regla inventada para que el puzle cuadre: la dia. 46 del Tema 7 dice que la clasificacion 'es un sistema jerarquico: ordena de lo general a lo particular', y las dia. 48 y 49 la recorren entera con el oboe y con los platillos.",
+  "_nombres_forzados": "Opcional, por defecto false. El ajuste avanzado de la 6b esconde el nombre de una pieza hasta que se pide una pista o hasta que se resuelve el tablero; una plantilla con 'nombres_forzados': true lo ensena siempre pase lo que diga el ajuste. Es de n3-hs-ocultas y de ninguna otra: ahi las baldas van sin rotulo y el nivel se resuelve contando cuantas piezas hay de cada grupo, asi que sin nombres no se pone dificil, se queda sin mecanismo.",
+
+  "subniveles": {
+    "_": "Las baldas que puede tener un tablero con eje 'hs-arbol', en el orden en que se enumeran. Ese orden es parte del contrato, igual que el de combinations: de el sale que semilla da que tablero.",
+    "_codigo": "Un prefijo del 'hs_codigo' de la revision MIMO. Una pieza cae en la balda cuyo prefijo sea el mas largo de los que encajan con su codigo.",
+    "_nombre": "El rotulo de la balda, y lo unico de aqui que sale a la pantalla. Un rotulo es la pregunta y no la respuesta, asi que se puede ver; el codigo no.",
+    "_regla": "Una balda concreta no puede salir sin la de su clase. 'De lengueta' al lado de 'Aerofonos' es de lo general a lo particular; 'De lengueta' sola es un rotulo que no se entiende, y ademas seria el nivel 1 con otro sistema.",
+    "baldas": [
+      { "codigo": "1", "nombre": "Idiófonos", "fuente": "temario", "dia": 47 },
+      { "codigo": "111", "nombre": "Golpeados directamente", "fuente": "temario", "dia": 49,
+        "porque": "La dia. 49 clasifica los platillos hasta aqui: 1. Idiofonos, 11. Idiofonos golpeados, 111. Idiofonos golpeados directamente." },
+      { "codigo": "112", "nombre": "Golpeados indirectamente", "fuente": "mimo",
+        "porque": "MIMO 112, 'indirectly struck idiophones': el que toca no ejecuta el golpe. Son las maracas, el sonajero y el guiro, y es la balda que le da sentido a la de al lado." },
+      { "codigo": "4", "nombre": "Aerófonos", "fuente": "temario", "dia": 47 },
+      { "codigo": "421", "nombre": "De bisel", "fuente": "mimo",
+        "porque": "MIMO 421, 'edge instruments or flutes'. Aqui caen las dos flautas del temario, la dulce y la travesera, que se tocan de forma distinta y son el mismo subnivel." },
+      { "codigo": "422", "nombre": "De lengüeta", "fuente": "temario", "dia": 48,
+        "porque": "La dia. 48 clasifica el oboe hasta aqui: 4. Aerofonos, 42. Instrumentos de viento propiamente dichos, 422. Instrumentos de viento con lengueta." },
+      { "codigo": "423", "nombre": "De labio", "fuente": "mimo",
+        "porque": "MIMO 423, 'labrosones (or lip-reed instruments)'. Es lo que el temario llama viento-metal, dicho por quien vibra en vez de por el material." }
+    ]
+  },
+
+  "generador": {
+    "prng": "mulberry32",
+    "porque": "Tiene que generar el mismo tablero en Python y en JavaScript, o el resolvedor estaría demostrando algo sobre otro juego. mulberry32 son cuatro líneas en los dos."
+  },
+
+  "plantillas": [
+    {
+      "id": "n1-hs",
+      "nivel": 1,
+      "titulo": "Por dónde sale el sonido",
+      "ejes": [{ "sistema": "hs", "baldas": 4 }],
+      "por_casilla": [2, 3],
+      "rotulos": "visibles",
+      "armarios": ["aula", "auditorio", "casa-pueblo"],
+      "solo_del_temario": true,
+      "semillas": 60
+    },
+    {
+      "id": "n1-uso",
+      "nivel": 1,
+      "titulo": "Quién lo toca",
+      "ejes": [{ "sistema": "uso", "baldas": 3 }],
+      "por_casilla": [3, 4],
+      "rotulos": "visibles",
+      "armarios": ["aula", "auditorio", "casa-pueblo"],
+      "solo_del_temario": true,
+      "semillas": 60
+    },
+    {
+      "id": "n2-subniveles",
+      "nivel": 2,
+      "titulo": "De lo general a lo particular",
+      "ejes": [{ "sistema": "hs-arbol", "baldas": 3 }],
+      "por_casilla": [2, 3],
+      "rotulos": "visibles",
+      "armarios": ["aula", "auditorio", "casa-pueblo"],
+      "solo_del_temario": true,
+      "semillas": 60,
+      "porque": "El hueco limitado del borrador. La balda 'Aerofonos' tiene tres huecos y en el monton hay cinco aerofonos, asi que no caben todos ahi: los que faltan estan en 'De lengueta', que es el segundo criterio. Lo que decide cual es la pieza que no cabe -y lo que le devuelve al nivel la solucion unica- es que manda la balda mas concreta, o sea la dia. 46: 'ordena de lo general a lo particular'. Va atado al temario como los dos de nivel 1, porque es de los de entrada, y sale entero: los dos ejemplos que el Tema 7 recorre hasta el ultimo subnivel son el oboe y los platillos."
+    },
+    {
+      "id": "n3-hs-ocultas",
+      "nivel": 3,
+      "titulo": "Baldas sin rótulo",
+      "ejes": [{ "sistema": "hs", "baldas": 4 }],
+      "por_casilla": [1, 4],
+      "rotulos": "ocultos",
+      "armarios": ["aula", "auditorio", "casa-pueblo"],
+      "solo_del_temario": false,
+      "semillas": 60,
+      "nombres_forzados": true,
+      "porque": "Sin rótulo, lo que identifica una balda es cuántos huecos tiene. Por eso aquí las capacidades tienen que salir todas distintas: dos baldas del mismo tamaño se pueden intercambiar, y eso son dos soluciones. Y 'nombres_forzados' porque este nivel se resuelve contando cuántas piezas hay de cada grupo: en avanzado, sin nombre no se pone difícil, se queda sin mecanismo."
+    },
+    {
+      "id": "n4-hs-uso",
+      "nivel": 4,
+      "titulo": "Los dos a la vez",
+      "ejes": [
+        { "sistema": "hs", "baldas": 3 },
+        { "sistema": "uso", "baldas": 3 }
+      ],
+      "por_casilla": [1, 1],
+      "rotulos": "visibles",
+      "armarios": ["aula", "auditorio", "casa-pueblo"],
+      "solo_del_temario": false,
+      "semillas": 60,
+      "porque": "Una pieza por casilla, o sea un 3x3 exacto de nueve piezas. Con [1,2] las filas tenian alto distinto segun llevaran una casilla de dos, y 82 de los 180 tableros apilaban seis fichas en vertical cuando ningun otro tablero pasa de cuatro: era la rejilla que peor se leia, y justo la del nivel que va de leer una rejilla. Lo que lo cerro fue la Fase 6: apilando seis, este tablero no admite ningun dibujo y pone el techo de los ocho; con una pieza por casilla admite 64 px y deja de ponerlo. Lo que cuesta es volumen y no dificultad, y eso no es una opinion: en un tablero de dos ejes la casilla de una pieza la fijan sus dos claves, asi que la capacidad no anade ningun razonamiento -a diferencia del nivel 2, donde la balda mas concreta es justamente el segundo criterio-."
+    },
+    {
+      "id": "n5-recambio",
+      "nivel": 5,
+      "titulo": "Los rótulos se dan la vuelta",
+      "ejes": [{ "sistema": "hs", "baldas": 3 }],
+      "recambio": "uso",
+      "por_casilla": [2, 3],
+      "rotulos": "visibles",
+      "armarios": ["aula", "auditorio", "casa-pueblo"],
+      "solo_del_temario": false,
+      "semillas": 60,
+      "porque": "La mecanica central del juego. Se ordena por Hornbostel-Sachs, las baldas se vuelven a rotular por el uso y hay que reordenar: lo que se queda quieto es donde los dos sistemas coinciden y lo que se mueve es la friccion. Va con el catalogo entero porque el piano y el saxofon son justo las piezas que mas se mueven."
+    },
+    {
+      "id": "n6-familia",
+      "nivel": 6,
+      "titulo": "Dentro de la orquesta",
+      "ejes": [{ "sistema": "familia", "baldas": 4 }],
+      "recambio": "hs",
+      "por_casilla": [1, 4],
+      "rotulos": "visibles",
+      "armarios": ["aula", "auditorio", "casa-pueblo"],
+      "solo_del_temario": false,
+      "semillas": 60,
+      "porque": "La columna sinfonica desplegada en sus cuatro familias, y despues rotulada por Hornbostel-Sachs. Es donde los dos sistemas se contradicen a la vista: la flauta es madera y la trompeta es metal y las dos caen en aerofonos, y 'percusion' es una sola familia que la fila de H-S parte en dos. El organo y las ondas Martenot no entran, y no por una lista de excepciones: clave_de() devuelve None para familia 'ninguna'."
+    },
+    {
+      "id": "n7-desordenado",
+      "nivel": 7,
+      "titulo": "Alguien lo ordenó antes",
+      "ejes": [{ "sistema": "hs", "baldas": 4 }],
+      "desordenado": true,
+      "por_casilla": [2, 3],
+      "rotulos": "visibles",
+      "armarios": ["aula", "auditorio", "casa-pueblo"],
+      "solo_del_temario": false,
+      "semillas": 60,
+      "porque": "El armario medio ordenado y mal, que es lo que pasa en un colegio real. El puzle no cambia -la solucion es la misma de siempre, cada pieza en su balda- y lo que cambia es de donde se parte, asi que el desorden se aplica al final sobre un tablero ya repartido y no puede convertir en dos lo que tenia una solucion. Y como el armario empieza lleno no hay monton, o sea que cada movimiento es un intercambio: la misma situacion que la segunda vuelta del nivel 5, y con ella la misma nota."
+    }
+  ],
+
+  "_desordenado": "El armario empieza ordenado por alguien que no sabia. El desorden es un ciclo entre baldas y no un revoltijo: si dos piezas de la misma balda se cambian entre si no ha pasado nada -las dos siguen donde van- y la nota contaria un error que no existe. Con un ciclo, cada pieza movida acaba en una balda que no es la suya, asi que 'cuantas estan mal' es exactamente cuantas se movieron.",
+
+  "_pendientes": {
+    "_": "Ya no hay. Los niveles 5 y 6 llegaron con la Fase 4 y son 'n5-recambio' y 'n6-familia'; el 2 y el 7 llegaron con la Fase 5. Del 2 faltaba a donde iba la pieza que no cabe, y no habia que mandarla a ninguna parte: se la lleva la balda mas concreta. Del 7 faltaba un tablero que empezara con estado en vez de con las piezas fuera."
+  }
+}

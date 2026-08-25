@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <!-- viewport-fit=cover + las variables safe-area del CSS: sin esto, en un
+         iPhone la barra de abajo se come el botón de Comprobar. -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="light dark" />
+    <title>El Armario del Aula de Música</title>
+    <link rel="stylesheet" href="css/armario.css" />
+  </head>
+  <body>
+    <!-- tabindex="-1" para que la navegación pueda darle el foco al cambiar de
+         pantalla: sin eso, quien va con teclado o con lector no se entera de
+         que ha cambiado todo. -->
+    <div id="juego" tabindex="-1"></div>
+    <noscript>
+      <p class="sin-js">
+        Este juego necesita JavaScript. No pide nada a ningún servidor y no guarda datos de nadie:
+        todo pasa dentro de esta página.
+      </p>
+    </noscript>
+    <script type="module" src="js/principal.js"></script>
+  </body>
+</html>

@@ -1,0 +1,802 @@
+{
+  "_": "El catalogo. El campo 'dia' dice de que diapositiva del Tema 7 sale cada uno.",
+  "_fuera_del_tema": "Un instrumento SIN 'dia' es de fuera del temario, y entonces 'porque' tiene que decir que aporta. Solo entran en los tableros que no piden 'solo_del_temario'.",
+  "_contrato": "docs/contrato_datos.md",
+  "_aviso": "De aqui solo sale a la pantalla el campo 'nombre'. Lo demas es cocina.",
+  "instrumentos": [
+    {
+      "id": "violin",
+      "nombre": "Violín",
+      "usos": [
+        "sinfonico"
+      ],
+      "hs": "cordofono",
+      "hs_codigo": "321.322",
+      "hs_fuente": "mimo",
+      "familia": "cuerda",
+      "dia": [
+        38
+      ]
+    },
+    {
+      "id": "viola",
+      "nombre": "Viola",
+      "usos": [
+        "sinfonico"
+      ],
+      "hs": "cordofono",
+      "hs_codigo": "321.322",
+      "hs_fuente": "analogia",
+      "familia": "cuerda",
+      "dia": [
+        38
+      ]
+    },
+    {
+      "id": "violonchelo",
+      "nombre": "Violonchelo",
+      "usos": [
+        "sinfonico"
+      ],
+      "hs": "cordofono",
+      "hs_codigo": "321.322",
+      "hs_fuente": "analogia",
+      "familia": "cuerda",
+      "dia": [
+        38
+      ]
+    },
+    {
+      "id": "contrabajo",
+      "nombre": "Contrabajo",
+      "usos": [
+        "sinfonico"
+      ],
+      "hs": "cordofono",
+      "hs_codigo": "321.322",
+      "hs_fuente": "analogia",
+      "familia": "cuerda",
+      "dia": [
+        38
+      ]
+    },
+    {
+      "id": "flauta-travesera",
+      "nombre": "Flauta travesera",
+      "usos": [
+        "sinfonico"
+      ],
+      "hs": "aerofono",
+      "hs_codigo": "421.121.12",
+      "hs_fuente": "analogia",
+      "familia": "viento-madera",
+      "dia": [
+        38,
+        44
+      ],
+      "porque": "La dia. 38 la llama solo «Flauta». Se usa el nombre de la dia. 44 para no confundirla con la flauta dulce, que es otra pieza del armario. Corroborado por una segunda fuente en español, un blog de organología que sigue el esquema de 1914: la nombra en «421.12 flauta de soplo lateral». No cambia 'hs_fuente', que sigue siendo 'analogia': manda MIMO, y un blog no responde de una clasificación."
+    },
+    {
+      "id": "clarinete",
+      "nombre": "Clarinete",
+      "usos": [
+        "sinfonico"
+      ],
+      "hs": "aerofono",
+      "hs_codigo": "422.211.2",
+      "hs_fuente": "mimo",
+      "familia": "viento-madera",
+      "dia": [
+        38,
+        44
+      ]
+    },
+    {
+      "id": "oboe",
+      "nombre": "Oboe",
+      "usos": [
+        "sinfonico"
+      ],
+      "hs": "aerofono",
+      "hs_codigo": "422.112",
+      "hs_fuente": "mimo",
+      "familia": "viento-madera",
+      "dia": [
+        38,
+        48
+      ]
+    },
+    {
+      "id": "fagot",
+      "nombre": "Fagot",
+      "usos": [
+        "sinfonico"
+      ],
+      "hs": "aerofono",
+      "hs_codigo": "422.112",
+      "hs_fuente": "analogia",
+      "familia": "viento-madera",
+      "dia": [
+        38
+      ]
+    },
+    {
+      "id": "trompeta",
+      "nombre": "Trompeta",
+      "usos": [
+        "sinfonico"
+      ],
+      "hs": "aerofono",
+      "hs_codigo": "423.2",
+      "hs_fuente": "analogia",
+      "familia": "viento-metal",
+      "dia": [
+        38,
+        44
+      ],
+      "porque": "Corroborado por una segunda fuente en español, un blog de organología que sigue el esquema de 1914: la nombra en «423.233 trompeta de válvulas». No cambia 'hs_fuente', que sigue siendo 'analogia': manda MIMO, y un blog no responde de una clasificación."
+    },
+    {
+      "id": "trombon",
+      "nombre": "Trombón",
+      "usos": [
+        "sinfonico"
+      ],
+      "hs": "aerofono",
+      "hs_codigo": "423.2",
+      "hs_fuente": "analogia",
+      "familia": "viento-metal",
+      "dia": [
+        38
+      ],
+      "porque": "Corroborado por una segunda fuente en español, un blog de organología que sigue el esquema de 1914: lo nombra en «423.22 extensible: trombón de varas». No cambia 'hs_fuente', que sigue siendo 'analogia': manda MIMO, y un blog no responde de una clasificación."
+    },
+    {
+      "id": "trompa",
+      "nombre": "Trompa",
+      "usos": [
+        "sinfonico"
+      ],
+      "hs": "aerofono",
+      "hs_codigo": "423.2",
+      "hs_fuente": "analogia",
+      "familia": "viento-metal",
+      "dia": [
+        38
+      ],
+      "porque": "Corroborado por una segunda fuente en español, un blog de organología que sigue el esquema de 1914: la nombra en «423.232 trompa de válvulas». No cambia 'hs_fuente', que sigue siendo 'analogia': manda MIMO, y un blog no responde de una clasificación."
+    },
+    {
+      "id": "tuba",
+      "nombre": "Tuba",
+      "usos": [
+        "sinfonico"
+      ],
+      "hs": "aerofono",
+      "hs_codigo": "423.2",
+      "hs_fuente": "analogia",
+      "familia": "viento-metal",
+      "dia": [
+        38
+      ]
+    },
+    {
+      "id": "timbales",
+      "nombre": "Timbales",
+      "usos": [
+        "sinfonico"
+      ],
+      "hs": "membranofono",
+      "hs_codigo": "211.1",
+      "hs_fuente": "mimo",
+      "familia": "percusion",
+      "dia": [
+        38,
+        44
+      ]
+    },
+    {
+      "id": "caja",
+      "nombre": "Caja",
+      "usos": [
+        "sinfonico"
+      ],
+      "hs": "membranofono",
+      "hs_codigo": "211.212",
+      "hs_fuente": "mimo",
+      "familia": "percusion",
+      "dia": [
+        38,
+        44
+      ]
+    },
+    {
+      "id": "bombo",
+      "nombre": "Bombo",
+      "usos": [
+        "sinfonico"
+      ],
+      "hs": "membranofono",
+      "hs_codigo": "211.212.1",
+      "hs_fuente": "mimo",
+      "familia": "percusion",
+      "dia": [
+        38
+      ]
+    },
+    {
+      "id": "platillos",
+      "nombre": "Platillos",
+      "usos": [
+        "sinfonico"
+      ],
+      "hs": "idiofono",
+      "hs_codigo": "111.142",
+      "hs_fuente": "mimo",
+      "familia": "percusion",
+      "dia": [
+        38,
+        49
+      ]
+    },
+    {
+      "id": "guitarra",
+      "nombre": "Guitarra",
+      "usos": [
+        "popular",
+        "escolar"
+      ],
+      "hs": "cordofono",
+      "hs_codigo": "321.322",
+      "hs_fuente": "mimo",
+      "dia": [
+        39,
+        41
+      ],
+      "porque": "El temario la pone en las dos columnas: cuerda popular en la dia. 39 y «otros» del método Orff en la 41. El armario desempata."
+    },
+    {
+      "id": "mandolina",
+      "nombre": "Mandolina",
+      "usos": [
+        "popular"
+      ],
+      "hs": "cordofono",
+      "hs_codigo": "321.321",
+      "hs_fuente": "mimo",
+      "dia": [
+        39
+      ]
+    },
+    {
+      "id": "bandurria",
+      "nombre": "Bandurria",
+      "usos": [
+        "popular"
+      ],
+      "hs": "cordofono",
+      "hs_codigo": "321.322",
+      "hs_fuente": "analogia",
+      "dia": [
+        39
+      ],
+      "porque": "Decisión del profesor, 09/08/2026, siguiendo el criterio de MIMO: 321.321 son los cuencos —«necked bowl lutes», y nombra la mandolina— y 321.322 las cajas de aros, «necked box lutes or necked guitars», donde MIMO pone la guitarra y el violín. Lo que separa las dos no es el fondo plano o curvo sino cómo está construida la caja, y la de rondalla se monta como la de una guitarra. Antes estaba en 321.321 por analogía con la mandolina, que es de las dos la que sí es un cuenco."
+    },
+    {
+      "id": "laud",
+      "nombre": "Laúd",
+      "usos": [
+        "popular"
+      ],
+      "hs": "cordofono",
+      "hs_codigo": "321.322",
+      "hs_fuente": "analogia",
+      "dia": [
+        39
+      ],
+      "porque": "Decisión del profesor, 09/08/2026, siguiendo el criterio de MIMO: 321.321 son los cuencos —«necked bowl lutes», y nombra la mandolina— y 321.322 las cajas de aros, «necked box lutes or necked guitars», donde MIMO pone la guitarra y el violín. Lo que separa las dos no es el fondo plano o curvo sino cómo está construida la caja, y la de rondalla se monta como la de una guitarra. Antes estaba en 321.321 por analogía con la mandolina, que es de las dos la que sí es un cuenco."
+    },
+    {
+      "id": "gaita",
+      "nombre": "Gaita",
+      "usos": [
+        "popular"
+      ],
+      "hs": "aerofono",
+      "hs_codigo": "422.112-7+422.22-62",
+      "hs_fuente": "mimo",
+      "dia": [
+        39,
+        44
+      ]
+    },
+    {
+      "id": "corneta",
+      "nombre": "Corneta",
+      "usos": [
+        "popular"
+      ],
+      "hs": "aerofono",
+      "hs_codigo": "423.12",
+      "hs_fuente": "analogia",
+      "dia": [
+        39
+      ],
+      "porque": "Decisión del profesor, 09/08/2026: 423.12, «tubular labrosones», dentro de 423.1 «natural labrosones». Antes estaba en 423.1 a secas. Baja un nivel y de paso deja resuelto el problema del nombre: es la corneta natural de banda, y no el cornetto de agujeros digitales (423.21) ni el cornetín de pistones (423.23). En 423.11 están las caracolas."
+    },
+    {
+      "id": "pandero",
+      "nombre": "Pandero",
+      "usos": [
+        "popular",
+        "escolar"
+      ],
+      "hs": "membranofono",
+      "hs_codigo": "211.311",
+      "hs_fuente": "temario",
+      "dia": [
+        39,
+        41
+      ],
+      "porque": "En las dos columnas: percusión tradicional en la dia. 39 y parche del método Orff en la 41. El armario desempata."
+    },
+    {
+      "id": "conga",
+      "nombre": "Conga",
+      "usos": [
+        "popular"
+      ],
+      "hs": "membranofono",
+      "hs_codigo": "211.221",
+      "hs_fuente": "analogia",
+      "dia": [
+        39
+      ]
+    },
+    {
+      "id": "djembe",
+      "nombre": "Djembé",
+      "usos": [
+        "popular"
+      ],
+      "hs": "membranofono",
+      "hs_codigo": "211.26",
+      "hs_fuente": "analogia",
+      "dia": [
+        39
+      ]
+    },
+    {
+      "id": "tabla",
+      "nombre": "Tabla",
+      "usos": [
+        "popular"
+      ],
+      "hs": "membranofono",
+      "hs_codigo": "211.12",
+      "hs_fuente": "analogia",
+      "dia": [
+        39
+      ],
+      "porque": "Decisión del profesor, 09/08/2026. Antes estaba en 211.11, que es «separate vessel drums: European timpani», y una tabla no es un timbal de orquesta suelto. Si es un timbal, MIMO tiene la casilla exacta: 211.12, «sets of vessel drums, W. Asian permanently joined pairs of kettledrums». Lo que queda dicho para no volver a discutirlo: el par no es homogéneo, porque el bayan es una caldera y el dayan de madera no, y por eso esto es una decisión y no una lectura de la fuente."
+    },
+    {
+      "id": "marimba",
+      "nombre": "Marimba",
+      "usos": [
+        "popular"
+      ],
+      "hs": "idiofono",
+      "hs_codigo": "111.212",
+      "hs_fuente": "analogia",
+      "dia": [
+        39
+      ]
+    },
+    {
+      "id": "xilofono",
+      "nombre": "Xilófono",
+      "usos": [
+        "popular",
+        "escolar"
+      ],
+      "hs": "idiofono",
+      "hs_codigo": "111.212",
+      "hs_fuente": "mimo",
+      "dia": [
+        39,
+        41
+      ],
+      "porque": "En las dos columnas: láminas populares en la dia. 39 y afinación determinada del método Orff en la 41. El armario desempata."
+    },
+    {
+      "id": "guitarra-electrica",
+      "nombre": "Guitarra eléctrica",
+      "usos": [
+        "popular"
+      ],
+      "hs": "electrofono",
+      "hs_codigo": "513",
+      "hs_fuente": "mimo",
+      "dia": [
+        39,
+        44
+      ],
+      "porque": "La revisión MIMO de Hornbostel-Sachs (2011) la clasifica en 513, «electro-acoustic chordophones», que está dentro de la clase 5, electrófonos, y la nombra con todas las letras. Su criterio no es dónde nace la vibración sino cómo se entrega el sonido: «todo instrumento construido o modificado estructuralmente para entregar una señal a un amplificador y un altavoz se clasifica como electrófono, aunque conserve alguna capacidad de sonar acústicamente». Una guitarra acústica con una pastilla puesta encima sigue siendo cordófono; una guitarra eléctrica está construida para eso. La dia. 47 del Tema 7 define el electrófono de otra manera, más cerca del esquema original de 1914, que no tenía clase 5."
+    },
+    {
+      "id": "bajo-electrico",
+      "nombre": "Bajo eléctrico",
+      "usos": [
+        "popular"
+      ],
+      "hs": "electrofono",
+      "hs_codigo": "513",
+      "hs_fuente": "analogia",
+      "dia": [
+        39
+      ],
+      "porque": "Mismo caso y mismo 513 que la guitarra eléctrica: construido para entregar la señal a un altavoz. MIMO no lo nombra, pero nombra la guitarra eléctrica y el violín eléctrico en la misma entrada."
+    },
+    {
+      "id": "sintetizador",
+      "nombre": "Sintetizador",
+      "usos": [
+        "popular"
+      ],
+      "hs": "electrofono",
+      "hs_codigo": "531",
+      "hs_fuente": "mimo",
+      "dia": [
+        39
+      ]
+    },
+    {
+      "id": "bateria",
+      "nombre": "Batería",
+      "usos": [
+        "popular"
+      ],
+      "hs": "membranofono",
+      "hs_codigo": "211.2",
+      "hs_fuente": "analogia",
+      "dia": [
+        39
+      ],
+      "revisar": "Una batería no cae en una sola fila: la caja y los toms son membranófonos y los platillos y el charles son idiófonos. Una pieza que pertenece a dos baldas rompe la solución única. Hay que decidir si se retira, si se declara membranófono por la pieza que manda, o si es la excepción que se explica. Mientras tanto no entra en ningún tablero."
+    },
+    {
+      "id": "carrillon",
+      "nombre": "Carrillón",
+      "usos": [
+        "escolar"
+      ],
+      "hs": "idiofono",
+      "hs_codigo": "111.222",
+      "hs_fuente": "analogia",
+      "dia": [
+        41
+      ]
+    },
+    {
+      "id": "metalofono",
+      "nombre": "Metalófono",
+      "usos": [
+        "escolar"
+      ],
+      "hs": "idiofono",
+      "hs_codigo": "111.222",
+      "hs_fuente": "mimo",
+      "dia": [
+        41
+      ]
+    },
+    {
+      "id": "pandereta",
+      "nombre": "Pandereta",
+      "usos": [
+        "escolar"
+      ],
+      "hs": "membranofono",
+      "hs_codigo": "211.311",
+      "hs_fuente": "mimo",
+      "dia": [
+        41
+      ]
+    },
+    {
+      "id": "castanuelas",
+      "nombre": "Castañuelas",
+      "usos": [
+        "escolar"
+      ],
+      "hs": "idiofono",
+      "hs_codigo": "111.141",
+      "hs_fuente": "mimo",
+      "dia": [
+        41
+      ]
+    },
+    {
+      "id": "maracas",
+      "nombre": "Maracas",
+      "usos": [
+        "escolar"
+      ],
+      "hs": "idiofono",
+      "hs_codigo": "112.13",
+      "hs_fuente": "analogia",
+      "dia": [
+        41
+      ],
+      "porque": "Corroborado por una segunda fuente en español, un blog de organología que sigue el esquema de 1914: las nombra en «112.1 idiófonos sacudidos». No cambia 'hs_fuente', que sigue siendo 'analogia': manda MIMO, y un blog no responde de una clasificación."
+    },
+    {
+      "id": "guiro",
+      "nombre": "Güiro",
+      "usos": [
+        "escolar"
+      ],
+      "hs": "idiofono",
+      "hs_codigo": "112.23",
+      "hs_fuente": "analogia",
+      "dia": [
+        41
+      ],
+      "porque": "Esa misma fuente lo pone en «112.22 tubo rascado» y aquí está en 112.23. Se leyó el MIMO y decide él: 112.23 es «scraped vessels, the corrugated surface of a vessel is scraped», y su nota geográfica es «S. America». Un calabazo rascado americano es eso. La fuente secundaria se equivoca, y las dos casillas caen igual en la balda 112."
+    },
+    {
+      "id": "sonajero",
+      "nombre": "Sonajero",
+      "usos": [
+        "escolar"
+      ],
+      "hs": "idiofono",
+      "hs_codigo": "112.13",
+      "hs_fuente": "analogia",
+      "dia": [
+        41
+      ]
+    },
+    {
+      "id": "flauta-dulce",
+      "nombre": "Flauta dulce",
+      "usos": [
+        "escolar"
+      ],
+      "hs": "aerofono",
+      "hs_codigo": "421.221.12",
+      "hs_fuente": "mimo",
+      "dia": [
+        41
+      ]
+    },
+    {
+      "id": "teclado",
+      "nombre": "Teclado",
+      "usos": [
+        "escolar"
+      ],
+      "hs": "electrofono",
+      "hs_codigo": "54",
+      "hs_fuente": "analogia",
+      "dia": [
+        41
+      ]
+    },
+    {
+      "id": "ukelele",
+      "nombre": "Ukelele",
+      "usos": [
+        "escolar"
+      ],
+      "hs": "cordofono",
+      "hs_codigo": "321.322",
+      "hs_fuente": "analogia",
+      "dia": [
+        41
+      ]
+    },
+    {
+      "id": "ondas-martenot",
+      "nombre": "Ondas Martenot",
+      "usos": [
+        "sinfonico"
+      ],
+      "hs": "electrofono",
+      "hs_codigo": "53",
+      "hs_fuente": "mimo",
+      "familia": "ninguna",
+      "porque": "Cierra la única casilla vacía de la matriz, sinfónico x electrófono. Y no tiene familia orquestal: no es cuerda, ni madera, ni metal, ni percusión. Eso no es un hueco, es el mismo argumento un nivel más adentro: si la familia no vale para una gaita, tampoco tiene por qué valer para todo lo que toca una orquesta."
+    },
+    {
+      "id": "piano",
+      "nombre": "Piano",
+      "usos": [
+        "sinfonico",
+        "popular",
+        "escolar"
+      ],
+      "hs": "cordofono",
+      "hs_codigo": "314.122-4-8",
+      "hs_fuente": "mimo",
+      "familia": "percusion",
+      "porque": "El instrumento más presente en un aula de música y no está en el Tema 7. Vale por partida doble: se toca con teclado y es un cordófono -las cuerdas se percuten-, y además está en la familia de percusión de la orquesta siendo cordófono. Es el único del catálogo con los tres usos, así que es también el que hace que los tres armarios repartan distinto."
+    },
+    {
+      "id": "organo",
+      "nombre": "Órgano",
+      "usos": [
+        "sinfonico"
+      ],
+      "hs": "aerofono",
+      "hs_codigo": "421.222.11",
+      "hs_fuente": "mimo",
+      "familia": "ninguna",
+      "porque": "Teclado y aerófono: son tubos y lo que vibra es el aire. Encaja en la definición de sinfónico de la dia. 37 -se estudia en conservatorio y pide años-, pero no en ninguna de las cuatro familias."
+    },
+    {
+      "id": "celesta",
+      "nombre": "Celesta",
+      "usos": [
+        "sinfonico"
+      ],
+      "hs": "idiofono",
+      "hs_codigo": "111.222-8",
+      "hs_fuente": "analogia",
+      "familia": "percusion",
+      "porque": "Teclado e idiófono: lo que suena son láminas de metal percutidas. Completa la fila de los teclados y engorda la casilla sinfónico x idiófono, que se quedaba en los platillos."
+    },
+    {
+      "id": "arpa",
+      "nombre": "Arpa",
+      "usos": [
+        "sinfonico"
+      ],
+      "hs": "cordofono",
+      "hs_codigo": "322.2",
+      "hs_fuente": "mimo",
+      "familia": "cuerda",
+      "porque": "Ausencia difícil de defender: es de la orquesta y la dia. 38 no la nombra."
+    },
+    {
+      "id": "saxofon",
+      "nombre": "Saxofón",
+      "usos": [
+        "sinfonico",
+        "popular"
+      ],
+      "hs": "aerofono",
+      "hs_codigo": "422.212",
+      "hs_fuente": "mimo",
+      "familia": "viento-madera",
+      "porque": "Es de metal y es viento-madera, porque lo que manda es la lengüeta y no el material. Es la mejor fricción posible para el eje de la familia, igual que la flauta y la trompeta lo son para el de Hornbostel-Sachs. Y es el único empate sinfónico contra popular del catálogo."
+    },
+    {
+      "id": "triangulo",
+      "nombre": "Triángulo",
+      "usos": [
+        "sinfonico",
+        "escolar"
+      ],
+      "hs": "idiofono",
+      "hs_codigo": "111.211",
+      "hs_fuente": "mimo",
+      "familia": "percusion",
+      "porque": "Está en la percusión de la orquesta y en el aula de infantil, así que es un empate sinfónico contra escolar, que no había ninguno."
+    },
+    {
+      "id": "melodica",
+      "nombre": "Melódica",
+      "usos": [
+        "escolar"
+      ],
+      "hs": "aerofono",
+      "hs_codigo": "412.132",
+      "hs_fuente": "analogia",
+      "porque": "Teclado y aerófono, por lengüeta libre. Está en medio colegio de España y no en el Tema 7, y engorda la casilla escolar x aerófono, que se quedaba en la flauta dulce."
+    },
+    {
+      "id": "acordeon",
+      "nombre": "Acordeón",
+      "usos": [
+        "popular"
+      ],
+      "hs": "aerofono",
+      "hs_codigo": "412.132",
+      "hs_fuente": "mimo",
+      "porque": "Se ve un teclado y un fuelle y se piensa en cualquier cosa menos en un aerófono. Lengüeta libre, como la melódica y la armónica."
+    },
+    {
+      "id": "armonica",
+      "nombre": "Armónica",
+      "usos": [
+        "popular",
+        "escolar"
+      ],
+      "hs": "aerofono",
+      "hs_codigo": "412.132",
+      "hs_fuente": "mimo",
+      "porque": "El tercer aerófono de lengüeta libre, y el más barato de reconocer."
+    },
+    {
+      "id": "dulzaina",
+      "nombre": "Dulzaina",
+      "usos": [
+        "popular"
+      ],
+      "hs": "aerofono",
+      "hs_codigo": "422.112",
+      "hs_fuente": "analogia",
+      "porque": "Doble lengüeta, como el oboe de la dia. 48, pero en la calle. Engorda la casilla popular x aerófono, que se quedaba en la gaita y la corneta."
+    },
+    {
+      "id": "cajon",
+      "nombre": "Cajón",
+      "usos": [
+        "popular"
+      ],
+      "hs": "idiofono",
+      "hs_codigo": "111.24",
+      "hs_fuente": "analogia",
+      "porque": "Parece un tambor, se toca como un tambor y es un idiófono: no hay parche, lo que vibra es la madera de la caja. Fricción pura, y de un instrumento que aquí se oye todas las semanas. Decisión del profesor, 09/08/2026: se queda en 111.24, «percussion vessels». Lo que hacía dudar era que las subdivisiones de esa casilla son gongs (111.241), campanas (111.242) y tambores de hendidura (111.243), y un cajón no es ninguna de las tres. Por eso se queda en el nivel padre: es una cavidad percutida y nada más adentro le corresponde."
+    },
+    {
+      "id": "zambomba",
+      "nombre": "Zambomba",
+      "usos": [
+        "popular"
+      ],
+      "hs": "membranofono",
+      "hs_codigo": "231",
+      "hs_fuente": "analogia",
+      "porque": "Membranófono que no se golpea: suena por frotación de la vara contra el parche. Sirve para que 'membranófono' no acabe queriendo decir 'tambor'. Corroborado por una segunda fuente en español, un blog de organología que sigue el esquema de 1914: la nombra en «231, fricción con un palo en contacto con la membrana». No cambia 'hs_fuente', que sigue siendo 'analogia': manda MIMO, y un blog no responde de una clasificación."
+    },
+    {
+      "id": "bongos",
+      "nombre": "Bongos",
+      "usos": [
+        "popular"
+      ],
+      "hs": "membranofono",
+      "hs_codigo": "211.251",
+      "hs_fuente": "analogia",
+      "porque": "Percusión latina de las que la dia. 39 mete en «tambores de todo tipo» sin nombrar."
+    },
+    {
+      "id": "gong",
+      "nombre": "Gong",
+      "usos": [
+        "sinfonico"
+      ],
+      "hs": "idiofono",
+      "hs_codigo": "111.241",
+      "hs_fuente": "mimo",
+      "familia": "percusion",
+      "porque": "Percusión de orquesta, y de las pocas que se reconoce sin haberla estudiado."
+    },
+    {
+      "id": "claves",
+      "nombre": "Claves",
+      "usos": [
+        "popular",
+        "escolar"
+      ],
+      "hs": "idiofono",
+      "hs_codigo": "111.11",
+      "hs_fuente": "analogia",
+      "porque": "Estaban en la tabla orientativa de docs/juego.md y no en la dia. 41. Dos palos que chocan: es el idiófono más limpio que hay para explicar qué es un idiófono."
+    },
+    {
+      "id": "theremin",
+      "nombre": "Theremín",
+      "usos": [
+        "popular"
+      ],
+      "hs": "electrofono",
+      "hs_codigo": "53",
+      "hs_fuente": "mimo",
+      "porque": "Se toca sin tocarlo, así que hace visible la definición de la dia. 47: el sonido no lo produce ninguna materia del instrumento, lo producen vibraciones eléctricas. Es el electrófono que la guitarra eléctrica no llega a ser."
+    }
+  ]
+}

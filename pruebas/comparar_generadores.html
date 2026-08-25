@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>¿Generan lo mismo Python y JavaScript?</title>
+    <link rel="stylesheet" href="pruebas.css" />
+  </head>
+  <body>
+    <h1>¿Generan lo mismo Python y JavaScript?</h1>
+
+    <p>
+      Un tablero no se guarda: se genera desde una plantilla, un armario y una semilla.
+      <code>herramientas/resolver.py</code> demuestra que todos los tableros tienen solución y una
+      sola, pero lo demuestra sobre los tableros que genera Python. Si el navegador generase otros,
+      esa demostración no diría nada sobre el juego que alguien juega.
+    </p>
+    <p>
+      Esta página vuelve a generarlos aquí y compara. Las huellas de Python están en
+      <code>tableros_esperados.json</code>, y las escribe
+      <code>python herramientas/comparar_generadores.py</code>, que además abre esta página sin
+      ventana y lee el resultado, para que la comprobación se pueda encadenar antes de un commit.
+    </p>
+
+    <pre id="informe">Comparando…</pre>
+
+    <script type="module" src="comparar_generadores.js"></script>
+  </body>
+</html>

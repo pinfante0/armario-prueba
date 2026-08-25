@@ -1,0 +1,444 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Los dibujos de las piezas. Un archivo, un <symbol> por instrumento.
+
+  El id de cada símbolo es `i-` y el id del instrumento en `instrumentos.json`,
+  y eso es todo el contrato: no hay un campo `icono` en el catálogo porque no
+  hace falta, y lo que se puede derivar no se almacena. Que una pieza tenga o no
+  dibujo lo dice **si su símbolo está en este archivo**, así que los iconos
+  entran por tandas sin tocar el catálogo, sin lista blanca y sin que el motor
+  espere al contenido: una pieza sin dibujo enseña su nombre, como hasta ahora.
+
+  Las reglas del estilo, elegido el 09/08/2026 comparando tres direcciones en
+  `material/estilo_iconos.html`. Eran cuatro y la tanda 2 añadió la quinta, que
+  es la segunda con la misma forma: **un grupo de confusión se dibuja como un
+  sistema y no como dibujos sueltos**, o lo que separa a dos piezas acaba siendo
+  una ocurrencia distinta en cada una.
+
+    1. Contorno a trazo de 2,4; el detalle que identifica, macizo. Nada a
+       medias. Un aro de radio 1,7 se rellena solo a 40 px por el suavizado, o
+       sea que el navegador decide lo que tiene que decidir el dibujo.
+    2. Todos los teclados llevan el mismo teclado: barra con cinco teclas negras
+       macizas agrupadas 2+3. Lo que distingue a una pieza es lo que tiene
+       encima. Seis dibujos que comparten motivo se leen como un set.
+    3. Nada macizo por debajo de 1,8 de ancho. El viewBox es 0 0 40 40 porque
+       40 px es el techo medido en 320x568: aquí una unidad es un píxel, y eso
+       hace que «esta línea sobrevive» se vea en la cuadrícula en vez de
+       razonarse.
+    4. Todo en currentColor, ni un color escrito. Así la paleta oscura sigue
+       estando una sola vez en el CSS y la ficha elegida —blanco sobre azul—
+       voltea el dibujo sin una segunda versión.
+    5. Las nueve cuerdas se separan por un sistema de cuatro rasgos, no una
+       por una: la **vara cruzada** la llevan los cuatro arcos y ninguna
+       pulsada; la **cabeza** es voluta redonda en el arco y pala recta en la
+       pulsada; la **boca maciza** es de las pulsadas y el **cordal**, de los
+       arcos; y el **cuerpo** es ocho con esquinas (arco), ocho liso (guitarra
+       y ukelele) o pera (las tres de pera). Lo que queda después de eso lo
+       separan el largo del mástil y el tamaño.
+    6. Los once tambores, igual, con otros cuatro rasgos. El primero es de
+       dibujo y no de organología, y por eso va antes: **cada uno se dibuja
+       desde donde se golpea**. Los que se golpean de frente enseñan el parche
+       y salen redondos —bombo, pandero, pandereta—; los que se golpean desde
+       arriba enseñan la caja y salen de perfil —los otros ocho—. Es la única
+       forma de que once cilindros con una piel no sean once veces el mismo
+       bulto, y no es una licencia: es la postura en la que se toca cada uno.
+       Los otros tres: **cuántos cuerpos**, uno o dos juntos (timbales, tabla
+       y bongos, que son los tres pares); **la caja**, cilindro (caja, tambor),
+       cuenco (timbales, bayan de la tabla), cono (conga, bongos), copa con
+       talle (djembé), aro (pandero, pandereta) o vasija (zambomba); y **con
+       qué se toca**, que es lo que llena el hueco de arriba igual que la vara
+       en las cuerdas: **cabeza redonda maciza** si es maza de fieltro —una el
+       bombo, dos cruzadas los timbales—, **palo sin cabeza** si es baqueta
+       —caja y tambor—, **varilla vertical clavada en el parche** la zambomba,
+       que es el único que no se golpea sino que se frota, y **nada encima** las
+       seis que se tocan con la mano: pandero, pandereta, conga, djembé, tabla
+       y bongos.
+
+  Y de ahí sale la única regla de composición del archivo: **las piezas cuyo
+  tamaño dice algo apoyan en la misma línea de suelo, y = 37,8**, y hoy son las
+  veinte de las tandas 2 y 3. Lo que separa un violín de una viola es el tamaño
+  y nada más, y un tamaño solo se lee comparando: alineadas por abajo la
+  escalera se ve, y centradas cada una en su caja no se vería. Se puede
+  sostener porque está medido —cuando dos arcos caen en el mismo tablero están
+  **siempre** en la misma balda, 275 de 275— y es la parte frágil de la tanda 2,
+  porque una pieza sola en pantalla pierde la comparación. Los ocho teclados de
+  la tanda 1 **no** apoyan ahí y no tienen por qué: entre ellos el tamaño no
+  distingue nada, así que van centrados en su caja. `pruebas/dibujos.html`
+  imprime dónde apoya cada uno, que es como se ve esto de un vistazo.
+
+  En los tambores esa escalera **está comprimida a propósito**, y conviene
+  saberlo antes de «arreglarla»: un bombo de verdad es tres veces una caja, y a
+  esa escala los bongos se quedarían en diez píxeles de dibujo. Aquí el tamaño
+  se puede comprimir porque **no carga con el peso** —cada pareja que se parece
+  tiene además una diferencia de forma— y en la tanda 2 no se podía, porque el
+  tamaño era lo único que separaba al violín de la viola.
+
+  Tanda 1, 09/08/2026: los seis teclados, que son el grupo que podía tumbar la
+  Fase 6b, y de propina la melódica y el acordeón, que también enseñan un
+  teclado y había que dibujarlos contra los otros seis o se dibujarían dos
+  veces.
+
+  Tanda 2, 09/08/2026: las nueve cuerdas de mástil y arco. Van juntas y no en
+  dos tandas porque comparten balda en 299 tableros: un violín dibujado sin la
+  mandolina delante es un violín dibujado dos veces, que es el mismo argumento
+  que metió la melódica en la tanda 1.
+
+  Tanda 3, 09/08/2026: los once tambores. Son once y no doce porque la batería
+  lleva `revisar` y no entra en ningún tablero: dibujarla no se vería. Y van
+  las once juntas porque no hay otra manera —**Hornbostel-Sachs no separa a dos
+  membranófonos jamás**, así que lo único que puede repartirlos es el eje del
+  uso, y cuando el tablero no lo lleva caen los once en la misma balda—. De ahí
+  salen los tres racimos que no se separan nunca: los tres sinfónicos (207 de
+  207), las cinco populares (100% entre sí) y pandereta con tambor (71 de 71).
+-->
+
+<svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" style="position:absolute">
+
+  <!-- PIANO · cordófono. La cola vista desde arriba: lomo recto a la izquierda,
+       el frente entero es teclado, y la caja se cierra hacia la cola. Con el
+       bulto a la derecha y a media altura no es un piano, es una «D». -->
+  <symbol id="i-piano" viewBox="0 0 40 40">
+    <g fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round">
+      <path d="M7.2 29.6V10.4a3 3 0 0 1 3-3h5.6c8 0 14.4 6.4 14.4 14.3v7.9Z"/>
+      <path d="M7.2 29.6h23v6.6h-23Z"/>
+    </g>
+    <path fill="currentColor" d="M9.6 30.6h1.8v3.8H9.6ZM12.9 30.6h1.8v3.8h-1.8ZM18.4 30.6h1.8v3.8h-1.8ZM21.7 30.6h1.8v3.8h-1.8ZM25 30.6h1.8v3.8H25Z"/>
+  </symbol>
+
+  <!-- ÓRGANO · aerófono. Los tubos son lo que identifica, así que van macizos.
+       Es, con el piano, el único de los seis que se reconoce en frío. -->
+  <symbol id="i-organo" viewBox="0 0 40 40">
+    <path fill="currentColor" d="
+      M8.4 9.6a2 2 0 0 1 2 2v9.8h-4v-9.8a2 2 0 0 1 2-2Z
+      M14.2 6.2a2 2 0 0 1 2 2v13.2h-4V8.2a2 2 0 0 1 2-2Z
+      M20 4.6a2 2 0 0 1 2 2v14.8h-4V6.6a2 2 0 0 1 2-2Z
+      M25.8 6.2a2 2 0 0 1 2 2v13.2h-4V8.2a2 2 0 0 1 2-2Z
+      M31.6 9.6a2 2 0 0 1 2 2v9.8h-4v-9.8a2 2 0 0 1 2-2Z"/>
+    <rect x="3.6" y="22.6" width="32.8" height="10.4" rx="2.4" fill="none" stroke="currentColor" stroke-width="2.4"/>
+    <path fill="currentColor" d="M8.2 25.2h2v5.2h-2ZM12.4 25.2h2v5.2h-2ZM19 25.2h2v5.2h-2ZM23.2 25.2h2v5.2h-2ZM27.4 25.2h2v5.2h-2Z"/>
+  </symbol>
+
+  <!-- CELESTA · idiófono. Mueble cerrado sobre patas: es lo único del grupo que
+       es un mueble, y las patas se leen a 40 px. Las láminas no se dibujan
+       porque en una celesta de verdad no se ven, van dentro; dibujadas como
+       barras graduadas parecían tres renglones de texto. -->
+  <symbol id="i-celesta" viewBox="0 0 40 40">
+    <rect x="6.2" y="5" width="27.6" height="16.8" rx="2.4" fill="none" stroke="currentColor" stroke-width="2.4"/>
+    <path fill="currentColor" d="M9.6 8.6h20.8v2H9.6Z"/>
+    <rect x="3.4" y="21.8" width="33.2" height="8.8" rx="2.2" fill="none" stroke="currentColor" stroke-width="2.4"/>
+    <path fill="currentColor" d="M8.2 24.2h2v4h-2ZM12.4 24.2h2v4h-2ZM19 24.2h2v4h-2ZM23.2 24.2h2v4h-2ZM27.4 24.2h2v4h-2Z"/>
+    <path fill="currentColor" d="M7.4 30.6h2.6v5.6H7.4ZM30 30.6h2.6v5.6H30Z"/>
+  </symbol>
+
+  <!-- ONDAS MARTENOT · electrófono. La cinta con el anillo, que no lo tiene
+       ningún otro teclado del catálogo. El anillo va centrado y no a un lado:
+       pegado al borde, con la cinta saliendo por un solo lado, se lee como un
+       chupachús. -->
+  <symbol id="i-ondas-martenot" viewBox="0 0 40 40">
+    <path fill="currentColor" d="M4.6 8.4h30.8v1.6H4.6Z"/>
+    <circle cx="16" cy="9.2" r="3" fill="none" stroke="currentColor" stroke-width="2.2"/>
+    <rect x="3.4" y="13.6" width="33.2" height="16.4" rx="2.6" fill="none" stroke="currentColor" stroke-width="2.4"/>
+    <path fill="none" stroke="currentColor" stroke-width="2.4" d="M3.4 20h33.2"/>
+    <path fill="currentColor" d="M8.2 21.6h2v5.4h-2ZM12.4 21.6h2v5.4h-2ZM19 21.6h2v5.4h-2ZM23.2 21.6h2v5.4h-2ZM27.4 21.6h2v5.4h-2Z"/>
+  </symbol>
+
+  <!-- TECLADO · electrófono. Losa portátil: panel estrecho y dos mandos. Lo que
+       lo separa del sintetizador es la proporción del panel, no cuántos mandos
+       tiene: contar puntos no se puede hacer a 40 px, comparar dos alturas
+       sí. -->
+  <symbol id="i-teclado" viewBox="0 0 40 40">
+    <rect x="3.4" y="12.2" width="33.2" height="16.6" rx="2.8" fill="none" stroke="currentColor" stroke-width="2.4"/>
+    <path fill="none" stroke="currentColor" stroke-width="2.4" d="M3.4 18.6h33.2"/>
+    <path fill="currentColor" d="M8.2 20.2h2v5.4h-2ZM12.4 20.2h2v5.4h-2ZM19 20.2h2v5.4h-2ZM23.2 20.2h2v5.4h-2ZM27.4 20.2h2v5.4h-2Z"/>
+    <path fill="currentColor" d="M8 13.9a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM13.2 13.9a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z"/>
+  </symbol>
+
+  <!-- SINTETIZADOR · electrófono. La misma losa con el panel el doble de alto:
+       cuatro mandos y un fader. Ahí está la diferencia con el teclado. -->
+  <symbol id="i-sintetizador" viewBox="0 0 40 40">
+    <rect x="3.4" y="8" width="33.2" height="24" rx="2.8" fill="none" stroke="currentColor" stroke-width="2.4"/>
+    <path fill="none" stroke="currentColor" stroke-width="2.4" d="M3.4 21.8h33.2"/>
+    <path fill="currentColor" d="M8.2 23.4h2v5.6h-2ZM12.4 23.4h2v5.6h-2ZM19 23.4h2v5.6h-2ZM23.2 23.4h2v5.6h-2ZM27.4 23.4h2v5.6h-2Z"/>
+    <path fill="currentColor" d="
+      M8 10.5a1.7 1.7 0 1 1 0 3.4 1.7 1.7 0 0 1 0-3.4Z
+      M14.2 10.5a1.7 1.7 0 1 1 0 3.4 1.7 1.7 0 0 1 0-3.4Z
+      M20.4 10.5a1.7 1.7 0 1 1 0 3.4 1.7 1.7 0 0 1 0-3.4Z
+      M26.6 10.5a1.7 1.7 0 1 1 0 3.4 1.7 1.7 0 0 1 0-3.4Z
+      M7 17.3h26v1.1H7Z
+      M21.1 15.4h1.8v4.6h-1.8Z"/>
+  </symbol>
+
+  <!-- MELÓDICA · aerófono de lengüeta libre. La boquilla sale **fuera** de la
+       silueta, que es lo que la separa de la losa del teclado a 40 px: un
+       detalle dentro del contorno se pierde, un bulto que rompe el contorno
+       no. -->
+  <symbol id="i-melodica" viewBox="0 0 40 40">
+    <path fill="currentColor" d="M3.4 16.8h7.6v5.4H3.4Z"/>
+    <rect x="10" y="11" width="26.6" height="18" rx="2.6" fill="none" stroke="currentColor" stroke-width="2.4"/>
+    <path fill="none" stroke="currentColor" stroke-width="2.4" d="M10 17.6h26.6"/>
+    <path fill="currentColor" d="M14.6 19.2h1.9v5.6h-1.9ZM18 19.2h1.9v5.6H18ZM23.4 19.2h1.9v5.6h-1.9ZM26.8 19.2h1.9v5.6h-1.9ZM30.2 19.2h1.9v5.6h-1.9Z"/>
+  </symbol>
+
+  <!-- ACORDEÓN · aerófono de lengüeta libre. Dos cajas y el fuelle en medio: es
+       la silueta más inconfundible del catálogo y aguanta aunque el detalle se
+       empaste. Su teclado va **vertical**, en la caja derecha, y esa es la
+       única excepción a la regla 2: en un acordeón de verdad va así. -->
+  <symbol id="i-acordeon" viewBox="0 0 40 40">
+    <rect x="3.4" y="7.6" width="9.2" height="24.8" rx="2.2" fill="none" stroke="currentColor" stroke-width="2.4"/>
+    <rect x="27.4" y="7.6" width="9.2" height="24.8" rx="2.2" fill="none" stroke="currentColor" stroke-width="2.4"/>
+    <g fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round">
+      <path d="M12.6 11.4 17.6 8.6l4.8 2.8 5-2.8"/>
+      <path d="M12.6 28.6 17.6 31.4l4.8-2.8 5 2.8"/>
+    </g>
+    <path fill="currentColor" d="
+      M6.6 13.4a1.6 1.6 0 1 1 0 3.2 1.6 1.6 0 0 1 0-3.2Z
+      M6.6 19a1.6 1.6 0 1 1 0 3.2 1.6 1.6 0 0 1 0-3.2Z
+      M6.6 24.6a1.6 1.6 0 1 1 0 3.2 1.6 1.6 0 0 1 0-3.2Z"/>
+    <path fill="currentColor" d="M29.8 12.4h4.4v1.9h-4.4ZM29.8 16.2h4.4v1.9h-4.4ZM29.8 21.8h4.4v1.9h-4.4ZM29.8 25.6h4.4v1.9h-4.4Z"/>
+  </symbol>
+
+  <!-- VIOLÍN · cordófono. El más pequeño de la escalera, y de ahí sale la pega
+       conocida de esta tanda: de la viola solo lo separa el tamaño. No es
+       pereza, es que no hay otra cosa que dibujar —son el mismo instrumento en
+       dos medidas— y por eso las nueve apoyan en la misma línea. -->
+<symbol id="i-violin" viewBox="0 0 40 40">
+    <g fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round">
+      <path d="M20 37.8 C24.91 37.8 27.44 36.83 27.44 33.92 C27.44 31.66 25.49 32.79 25.49 31.66 L23.87 30.2 L25.49 28.74 C25.49 27.45 25.95 25.19 25.95 23.89 C25.95 22.6 23.69 21.63 20 21.63 C16.31 21.63 14.05 22.6 14.05 23.89 C14.51 27.45 14.51 28.74 14.51 28.74 L16.13 30.2 L14.51 31.66 C14.51 32.79 12.56 31.66 12.56 33.92 C12.56 36.83 15.09 37.8 20 37.8Z"/>
+      <path d="M20 21.63V15"/>
+      <path d="M9.36 24.86L 30.64 19.04"/>
+    </g>
+    <path fill="currentColor" d="M18.3 15a1.7 1.7 0 1 1 0 3.4 1.7 1.7 0 0 1 0-3.4ZM18.6 36.5h2.8l0.7 -5.17h-4.2ZM8.96 25.46l3.1-1.4 1.2 2.6-3.1 1.4Z"/>
+  </symbol>
+
+  <!-- VIOLA · cordófono. El violín un 18% más grande. Se lee al lado del violín
+       y no se lee sola: es lo que la Fase 6b tiene que medir, no discutir. -->
+<symbol id="i-viola" viewBox="0 0 40 40">
+    <g fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round">
+      <path d="M20 37.8 C25.81 37.8 28.8 36.65 28.8 33.21 C28.8 30.53 26.5 31.87 26.5 30.53 L24.58 28.8 L26.5 27.08 C26.5 25.55 27.04 22.87 27.04 21.34 C27.04 19.81 24.37 18.66 20 18.66 C15.63 18.66 12.96 19.81 12.96 21.34 C13.5 25.55 13.5 27.08 13.5 27.08 L15.42 28.8 L13.5 30.53 C13.5 31.87 11.2 30.53 11.2 33.21 C11.2 36.65 14.19 37.8 20 37.8Z"/>
+      <path d="M20 18.66V10.5"/>
+      <path d="M8 22.49L 32 15.6"/>
+    </g>
+    <path fill="currentColor" d="M18.3 10.5a1.7 1.7 0 1 1 0 3.4 1.7 1.7 0 0 1 0-3.4ZM18.6 36.5h2.8l0.7 -6.12h-4.2ZM7.6 23.09l3.1-1.4 1.2 2.6-3.1 1.4Z"/>
+  </symbol>
+
+  <!-- VIOLONCHELO · cordófono. Aquí entra la pica, que es el primer rasgo de
+       verdad de la escalera: los dos de arriba se sostienen con la barbilla y
+       los dos de abajo se apoyan en el suelo. El cuerpo queda levantado de la
+       línea, y eso se ve incluso cuando el tamaño no. -->
+<symbol id="i-violonchelo" viewBox="0 0 40 40">
+    <g fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round">
+      <path d="M20 34.4 C25.93 34.4 28.99 33.23 28.99 29.71 C28.99 26.98 26.64 28.34 26.64 26.98 L24.67 25.22 L26.64 23.46 C26.64 21.9 27.19 19.16 27.19 17.6 C27.19 16.04 24.46 14.86 20 14.86 C15.54 14.86 12.81 16.04 12.81 17.6 C13.36 21.9 13.36 23.46 13.36 23.46 L15.33 25.22 L13.36 26.98 C13.36 28.34 11.01 26.98 11.01 29.71 C11.01 33.23 14.07 34.4 20 34.4Z"/>
+      <path d="M20 14.86V6.5"/>
+      <path d="M7.81 18.77L 32.19 11.74"/>
+      <path d="M20 34.4V37.8"/>
+    </g>
+    <path fill="currentColor" d="M18.3 6.5a1.7 1.7 0 1 1 0 3.4 1.7 1.7 0 0 1 0-3.4ZM18.6 33.1h2.8l0.7 -6.25h-4.2ZM7.41 19.37l3.1-1.4 1.2 2.6-3.1 1.4Z"/>
+  </symbol>
+
+  <!-- CONTRABAJO · cordófono. El único de los cuatro que no es el mismo dibujo
+       más grande: lleva los **hombros caídos**, que no es licencia de dibujante
+       sino de dónde viene —de las violas da gamba y no de la familia del
+       violín—. Es lo que lo separa del violonchelo cuando el tamaño no llega. -->
+<symbol id="i-contrabajo" viewBox="0 0 40 40">
+    <g fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round">
+      <path d="M20 34.4 C27.23 34.4 30.96 33.09 30.96 29.14 C30.96 26.07 28.09 27.61 28.09 26.07 L25.7 24.1 L28.09 22.13 C28.09 20.38 27.45 17.31 27.45 15.56 C27.45 13.8 24.62 12.49 20 12.49 C15.38 12.49 12.55 13.8 12.55 15.56 C11.91 20.38 11.91 22.13 11.91 22.13 L14.3 24.1 L11.91 26.07 C11.91 27.61 9.04 26.07 9.04 29.14 C9.04 33.09 12.77 34.4 20 34.4Z"/>
+      <path d="M20 12.49V2.9"/>
+      <path d="M5.84 16.87L 34.16 8.98"/>
+      <path d="M20 34.4V37.8"/>
+    </g>
+    <path fill="currentColor" d="M18.3 2.9a1.7 1.7 0 1 1 0 3.4 1.7 1.7 0 0 1 0-3.4ZM18.6 33.1h2.8l0.7 -7.01h-4.2ZM5.44 17.47l3.1-1.4 1.2 2.6-3.1 1.4Z"/>
+  </symbol>
+
+  <!-- UKELELE · cordófono. La guitarra a dos tercios: mismo ocho con cintura,
+       misma boca, mástil corto. Que sea la guitarra pequeña **es** el dato, así
+       que dibujarle otra forma habría enseñado algo falso. -->
+<symbol id="i-ukelele" viewBox="0 0 40 40">
+    <g fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round">
+      <path d="M20 37.8 C25.31 37.8 28.05 36.89 28.05 34.16 C28.05 31.73 25.15 29.6 25.15 28.69 C25.15 27.78 26.6 25.66 26.6 24.75 C26.6 23.53 24.09 22.62 20 22.62 C15.91 22.62 13.4 23.53 13.4 24.75 C13.4 25.66 14.85 27.78 14.85 28.69 C14.85 29.6 11.95 31.73 11.95 34.16 C11.95 36.89 14.69 37.8 20 37.8Z"/>
+      <path d="M20 22.62V18.5"/>
+    </g>
+    <path fill="currentColor" d="M17.4 14.8h5.2a1.1 1.1 0 0 1 1.1 1.1v1.5a1.1 1.1 0 0 1-1.1 1.1h-5.2a1.1 1.1 0 0 1-1.1-1.1v-1.5a1.1 1.1 0 0 1 1.1-1.1ZM17.12 29.91a2.88 2.88 0 1 1 5.77 0a2.88 2.88 0 1 1 -5.77 0Z"/>
+  </symbol>
+
+  <!-- MANDOLINA · cordófono. Pera estrecha, que es lo que la separa de la
+       bandurria y del laúd. La caja de cuenco de MIMO —321.321, y por eso está
+       ella sola en su código— no se ve de frente, así que el dibujo la cuenta
+       por lo que sí se ve: es la pera angosta del grupo. -->
+<symbol id="i-mandolina" viewBox="0 0 40 40">
+    <g fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round">
+      <path d="M20 37.8 C25.99 37.8 28.32 35.88 28.32 32.36 C28.32 27.88 22.16 24.04 20 21.8 C17.84 24.04 11.68 27.88 11.68 32.36 C11.68 35.88 14.01 37.8 20 37.8Z"/>
+      <path d="M20 21.8V16.5"/>
+    </g>
+    <path fill="currentColor" d="M17.4 12.8h5.2a1.1 1.1 0 0 1 1.1 1.1v1.5a1.1 1.1 0 0 1-1.1 1.1h-5.2a1.1 1.1 0 0 1-1.1-1.1v-1.5a1.1 1.1 0 0 1 1.1-1.1ZM16.96 29.16a3.04 3.04 0 1 1 6.08 0a3.04 3.04 0 1 1 -6.08 0Z"/>
+  </symbol>
+
+  <!-- BANDURRIA · cordófono. Pera ancha y **casi sin mástil**: es el rasgo que
+       la separa del laúd, que es su misma caja con el mástil largo. Quien haya
+       visto una rondalla reconoce el par por ahí y no por otra cosa. -->
+<symbol id="i-bandurria" viewBox="0 0 40 40">
+    <g fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round">
+      <path d="M20 37.8 C29.16 37.8 32.72 35.34 32.72 30.82 C32.72 25.08 23.31 20.15 20 17.28 C16.69 20.15 7.28 25.08 7.28 30.82 C7.28 35.34 10.84 37.8 20 37.8Z"/>
+      <path d="M20 17.28V14.5"/>
+    </g>
+    <path fill="currentColor" d="M17.4 10.8h5.2a1.1 1.1 0 0 1 1.1 1.1v1.5a1.1 1.1 0 0 1-1.1 1.1h-5.2a1.1 1.1 0 0 1-1.1-1.1v-1.5a1.1 1.1 0 0 1 1.1-1.1ZM16.1 26.72a3.9 3.9 0 1 1 7.8 0a3.9 3.9 0 1 1 -7.8 0Z"/>
+  </symbol>
+
+  <!-- LAÚD · cordófono. La bandurria con el mástil largo. Los dos comparten
+       caja y código —321.322, con la guitarra, porque el criterio de MIMO es
+       cómo está construida la caja y no si el fondo es plano—, así que el
+       dibujo tenía que separarlos por el mástil o no separarlos. -->
+<symbol id="i-laud" viewBox="0 0 40 40">
+    <g fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round">
+      <path d="M20 37.8 C28.3 37.8 31.53 35.57 31.53 31.48 C31.53 26.27 23 21.8 20 19.2 C17 21.8 8.47 26.27 8.47 31.48 C8.47 35.57 11.7 37.8 20 37.8Z"/>
+      <path d="M20 19.2V10.5"/>
+    </g>
+    <path fill="currentColor" d="M17.4 6.8h5.2a1.1 1.1 0 0 1 1.1 1.1v1.5a1.1 1.1 0 0 1-1.1 1.1h-5.2a1.1 1.1 0 0 1-1.1-1.1v-1.5a1.1 1.1 0 0 1 1.1-1.1ZM16.47 27.76a3.53 3.53 0 1 1 7.07 0a3.53 3.53 0 1 1 -7.07 0Z"/>
+  </symbol>
+
+  <!-- GUITARRA · cordófono. La referencia del grupo de las pulsadas: ocho con
+       cintura, boca maciza grande y mástil largo. Es la más grande de las nueve
+       porque es la que más veces sale y la que todo el mundo reconoce; el resto
+       del grupo se dibujó contra ella. -->
+<symbol id="i-guitarra" viewBox="0 0 40 40">
+    <g fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round">
+      <path d="M20 37.8 C28.08 37.8 32.24 36.41 32.24 32.26 C32.24 28.56 27.84 25.33 27.84 23.94 C27.84 22.55 30.04 19.32 30.04 17.93 C30.04 16.09 26.22 14.7 20 14.7 C13.78 14.7 9.96 16.09 9.96 17.93 C9.96 19.32 12.16 22.55 12.16 23.94 C12.16 25.33 7.76 28.56 7.76 32.26 C7.76 36.41 11.92 37.8 20 37.8Z"/>
+      <path d="M20 14.7V6.5"/>
+    </g>
+    <path fill="currentColor" d="M17.4 2.8h5.2a1.1 1.1 0 0 1 1.1 1.1v1.5a1.1 1.1 0 0 1-1.1 1.1h-5.2a1.1 1.1 0 0 1-1.1-1.1v-1.5a1.1 1.1 0 0 1 1.1-1.1ZM15.61 25.79a4.39 4.39 0 1 1 8.78 0a4.39 4.39 0 1 1 -8.78 0Z"/>
+  </symbol>
+
+  <!-- BOMBO · membranófono. De frente, porque de frente se golpea: el parche
+       entero, el aro, el pie y la maza. Es el mayor de los tres redondos y el
+       único con pie, que es lo que lo separa del pandero sin depender del
+       tamaño. -->
+  <symbol id="i-bombo" viewBox="0 0 40 40">
+    <g fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round">
+      <circle cx="20" cy="20.4" r="12.6"/>
+      <circle cx="20" cy="20.4" r="7.8"/>
+      <path d="M13.8 31.4 10.2 37.8M26.2 31.4 29.8 37.8"/>
+      <path d="M30.6 35.6 34.4 28.4"/>
+    </g>
+    <path fill="currentColor" d="M35.4 23.4a2.7 2.7 0 1 1 0 5.4 2.7 2.7 0 0 1 0-5.4Z"/>
+  </symbol>
+
+  <!-- TIMBALES · membranófono. Dos cuencos de distinto tamaño sobre su pie, y
+       dos mazas cruzadas con la cabeza maciza: son de fieltro y no baquetas, y
+       esa cabeza es lo que los separa de la caja y del tambor antes que el
+       cuenco. El pie va en trapecio y no en tallo: con tallo y peana los dos
+       cuencos eran dos copas de cóctel. -->
+  <symbol id="i-timbales" viewBox="0 0 40 40">
+    <g fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round">
+      <ellipse cx="12" cy="20.6" rx="8" ry="2.5"/>
+      <path d="M4 20.6a8 9.4 0 0 0 16 0"/>
+      <path d="M9.4 29.4 7.6 37.8H16.4L14.6 29.4"/>
+      <ellipse cx="29.4" cy="23.4" rx="6.2" ry="2"/>
+      <path d="M23.2 23.4a6.2 7.4 0 0 0 12.4 0"/>
+      <path d="M27.2 30.4 25.8 37.8H33L31.6 30.4"/>
+      <path d="M13.4 16.4 25.2 8.6M26.6 16.4 14.8 8.6"/>
+    </g>
+    <path fill="currentColor" d="M27 5.2a2.3 2.3 0 1 1 0 4.6 2.3 2.3 0 0 1 0-4.6ZM13 5.2a2.3 2.3 0 1 1 0 4.6 2.3 2.3 0 0 1 0-4.6Z"/>
+  </symbol>
+
+  <!-- CAJA · membranófono. Ancha y baja, **sobre su trípode**: es la única del
+       catálogo que vive en un pie, y eso es lo que la separa del tambor, que es
+       su mismo código —211.212— y por tanto su mismo casco. La bordonera no se
+       dibuja: va por debajo del parche de abajo y a 34 px se empasta con el
+       casco, igual que las láminas de la celesta no se ven en una celesta. -->
+  <symbol id="i-caja" viewBox="0 0 40 40">
+    <g fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round">
+      <ellipse cx="20" cy="21.4" rx="11.4" ry="3.2"/>
+      <path d="M8.6 21.4v6.2a11.4 3.2 0 0 0 22.8 0v-6.2"/>
+      <path d="M13.6 29.6 10.4 37.8M26.4 29.6 29.6 37.8M20 30.8V37.8"/>
+      <path d="M12.2 5 27.8 15.6M27.8 5 12.2 15.6"/>
+    </g>
+  </symbol>
+
+  <!-- PANDERO · membranófono. Aro y parche, y nada mas: es el único redondo sin
+       añadido, y ese vacío **es** el dato, porque lo que tiene la pandereta son
+       las sonajas y lo que tiene el bombo es el pie. Va grande porque un pandero
+       lo es al lado de una pandereta. -->
+  <symbol id="i-pandero" viewBox="0 0 40 40">
+    <g fill="none" stroke="currentColor" stroke-width="2.4">
+      <circle cx="20" cy="26.2" r="11.6"/>
+      <circle cx="20" cy="26.2" r="8.2"/>
+    </g>
+  </symbol>
+
+  <!-- PANDERETA · membranófono. El pandero pequeño con **tres sonajas macizas**
+       metidas en el aro. Los dos comparten código —211.311— así que el dibujo
+       tenía que separarlos por lo que se oye, que es lo que se ve: las sonajas
+       y, detrás, el tamaño. -->
+  <symbol id="i-pandereta" viewBox="0 0 40 40">
+    <g fill="none" stroke="currentColor" stroke-width="2.4">
+      <circle cx="20" cy="28.6" r="9.2"/>
+      <circle cx="20" cy="28.6" r="5.8"/>
+    </g>
+    <path fill="currentColor" d="
+      M12.22 19.02a1.8 1.8 0 1 1 0 3.6 1.8 1.8 0 0 1 0-3.6Z
+      M27.78 19.02a1.8 1.8 0 1 1 0 3.6 1.8 1.8 0 0 1 0-3.6Z
+      M12.22 34.58a1.8 1.8 0 1 1 0 3.6 1.8 1.8 0 0 1 0-3.6Z
+      M27.78 34.58a1.8 1.8 0 1 1 0 3.6 1.8 1.8 0 0 1 0-3.6Z"/>
+  </symbol>
+
+  <!-- CONGA · membranófono. Un parche, cuerpo alto y con panza, de una pieza
+       hasta el suelo. Lo que la separa del djembé es que **no tiene talle**: la
+       conga es un tonel y el djembé una copa. -->
+  <symbol id="i-conga" viewBox="0 0 40 40">
+    <g fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round">
+      <ellipse cx="20" cy="10.4" rx="7.2" ry="2.3"/>
+      <path d="M12.8 10.4C10.8 17 12.4 29.4 15.4 35a4.6 2.8 0 0 0 9.2 0C27.6 29.4 29.2 17 27.2 10.4"/>
+    </g>
+  </symbol>
+
+  <!-- DJEMBÉ · membranófono. La copa: boca ancha, **talle** y pie acampanado.
+       Es la silueta más marcada de los ocho de perfil y aguanta aunque el
+       detalle se empaste. -->
+  <symbol id="i-djembe" viewBox="0 0 40 40">
+    <g fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round">
+      <ellipse cx="20" cy="12.8" rx="9.8" ry="2.9"/>
+      <path d="M10.2 12.8C10.2 20.6 16.6 23.2 16.6 27.2C16.6 31 13.4 33.4 12.6 35a7.4 2.8 0 0 0 14.8 0C26.6 33.4 23.4 31 23.4 27.2C23.4 23.2 29.8 20.6 29.8 12.8"/>
+    </g>
+  </symbol>
+
+  <!-- TABLA · membranófono. La pareja **suelta y desigual**: el bayan es un
+       cuenco y el dayan un cilindro alto, y esa desigualdad es lo que la separa
+       de los bongos, que son dos conos parecidos y pegados. Y con el parche en
+       escorzo cabe por fin **el ojo**, que es lo que de verdad nombra a una
+       tabla: va macizo, que es la regla 1. -->
+  <symbol id="i-tabla" viewBox="0 0 40 40">
+    <g fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round">
+      <ellipse cx="11.8" cy="25" rx="7" ry="2.2"/>
+      <path d="M4.8 25a7 12.8 0 0 0 14 0"/>
+      <ellipse cx="29.4" cy="18.6" rx="5.6" ry="1.9"/>
+      <path d="M23.8 18.6 25.4 35a4 2.6 0 0 0 8 0L35 18.6"/>
+    </g>
+    <path fill="currentColor" d="M11.8 22.8a2.2 2.2 0 1 1 0 4.4 2.2 2.2 0 0 1 0-4.4ZM29.4 16.8a1.8 1.8 0 1 1 0 3.6 1.8 1.8 0 0 1 0-3.6Z"/>
+  </symbol>
+
+  <!-- BONGOS · membranófono. Dos conos pequeños **unidos por su taco**, que va
+       macizo porque es lo que los hace una pieza y no dos tambores al lado. Son
+       los más bajos de los once, y eso también los nombra: un bongó es pequeño.
+       No llevan ojo, que es lo que los separa de la tabla de cerca. -->
+  <symbol id="i-bongos" viewBox="0 0 40 40">
+    <g fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round">
+      <ellipse cx="12.2" cy="25.6" rx="5.6" ry="1.8"/>
+      <path d="M6.6 25.6 8 35.8a4.2 2 0 0 0 8.4 0L17.8 25.6"/>
+      <ellipse cx="28.4" cy="21.6" rx="7" ry="2.2"/>
+      <path d="M21.4 21.6 23 35.6a5.4 2.2 0 0 0 10.8 0L35.4 21.6"/>
+    </g>
+    <path fill="currentColor" d="M16.4 28.2h6.4v3.4h-6.4Z"/>
+  </symbol>
+
+  <!-- ZAMBOMBA · membranófono, y el único de los once que no se golpea: se
+       frota la varilla. Por eso la varilla va **clavada en el parche y de pie**,
+       que de paso llena el hueco de arriba como el mástil en las cuerdas. Es 231
+       y no 211: un tambor de fricción. -->
+  <symbol id="i-zambomba" viewBox="0 0 40 40">
+    <g fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round">
+      <ellipse cx="20" cy="23" rx="6.2" ry="2"/>
+      <path d="M13.8 23C11.4 26.4 9.8 31 10.6 35.2a9.4 2.6 0 0 0 18.8 0C30.2 31 28.6 26.4 26.2 23"/>
+      <path d="M20 23V4"/>
+    </g>
+  </symbol>
+
+</svg>

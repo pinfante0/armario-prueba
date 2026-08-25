@@ -1,0 +1,1063 @@
+/* El Armario del Aula de Música.
+ *
+ * Esto NO es la estética del juego. `CLAUDE.md` deja la ropa abierta a
+ * propósito —se decide dibujando dos o tres direcciones y comparándolas, como
+ * se hizo en el proyecto hermano con las tres maquetas— y esta hoja es lo justo
+ * para que la Fase 2 se pueda jugar y medir: un mueble sobrio, dos colores y
+ * nada que haya que desmontar después. Cuando la maqueta esté elegida, lo que
+ * se cambia es este archivo y no el JavaScript.
+ *
+ * Lo que sí es una decisión y no un provisional: **ninguna pantalla se
+ * desplaza**, y el suelo es un teléfono de 320 px de ancho. Por eso casi todo
+ * lo que ocupa alto está en `clamp()` contra `vh` en vez de en un número fijo:
+ * el tablero se encoge con la pantalla en lugar de salirse por abajo. Se mide,
+ * no se mira: `python herramientas/medir_pantalla.py`.
+ */
+
+/* La paleta clara, y abajo la oscura una sola vez.
+ *
+ * Cuál de las dos se usa lo decide `js/ajustes.js`, que escribe `data-tema` en
+ * el <html> **también cuando el tema es el automático**. Con una media query
+ * aquí harían falta dos copias de la paleta oscura —la del sistema y la de la
+ * elección a mano— y eso es un color cambiado en un sitio y no en el otro. El
+ * precio es que sin JavaScript no hay tema oscuro, y este juego sin JavaScript
+ * no es nada: lo dice su propio <noscript>. */
+:root {
+  color-scheme: light;
+
+  --papel: #f7f4ee;
+  --tinta: #21201c;
+  --apagado: #6b675e;
+  --madera: #d9c9ae;
+  --madera-honda: #b79f7c;
+  --hueco-fondo: #efe9dd;
+  --ficha-fondo: #fffdf8;
+  --realce: #1d5c8c;
+  --realce-tinta: #ffffff;
+  --error: #a12a22;
+  --acierto: #1c6b3a;
+  --sombra: rgba(40, 32, 20, 0.16);
+
+  /* La ficha que lleva una pieza, aparte de --ficha-fondo -que también viste
+     los botones de .opcion-. Decisión de la 6.6, explicada donde se define la
+     paleta oscura: aquí, en el tema claro, valen lo mismo que el resto de la
+     paleta. */
+  --pieza-fondo: var(--ficha-fondo);
+  --pieza-borde: var(--madera-honda);
+  --pieza-tinta: var(--tinta);
+
+  /* Los cuatro tamaños de los que cuelga que quepa o no quepa */
+  --ficha-alto: clamp(1.85rem, 4.9vh, 2.5rem);
+  --ficha-texto: clamp(0.6rem, 2.6vw, 0.82rem);
+  --hueco: clamp(0.2rem, 0.85vh, 0.45rem);
+  /* Y este no lleva clamp, y es a propósito por dos motivos. Uno: un dibujo que
+     cambia de tamaño con la pantalla es un set que se ve distinto en cada
+     teléfono. Y dos: el peor caso manda, y aquí el peor caso es 320x568.
+   *
+   * **34 y no 40, y la diferencia la puso una medición que faltaba.** La Fase 6
+   * cerró 40 px explorando con `medir_iconos.py`, que pinta el tablero sin
+   * dibujos y le inyecta uno de mentira encima; con los dibujos ya dentro y los
+   * tres estados que mide `comprobar_pantalla.py`, 40 px se pasa 9 px en
+   * `n6-familia` **cuando todas las piezas llevan dibujo**. Que hoy solo lo
+   * lleven ocho no vale como respuesta: las 59 van a llevarlo, así que el
+   * tamaño se decide contra ese final y no contra la tanda de hoy. A 34 px el
+   * peor caso pasa con 15 px de sobra, que es la holgura del menú.
+   *
+   * Medido, no razonado: `python herramientas/comprobar_pantalla.py`. */
+  --ficha-recurso: 34px;
+}
+
+:root[data-tema='oscuro'] {
+  color-scheme: dark;
+
+  --papel: #16161a;
+  --tinta: #eceae4;
+  --apagado: #9d998f;
+  --madera: #3a332a;
+  --madera-honda: #574c3d;
+  --hueco-fondo: #201f22;
+  --ficha-fondo: #2a2924;
+  --realce: #6aa9d8;
+  --realce-tinta: #10171d;
+  --error: #ef7a70;
+  --acierto: #74cf98;
+  --sombra: rgba(0, 0, 0, 0.4);
+
+  /* --pieza-fondo, --pieza-borde y --pieza-tinta NO se redefinen aquí, y es la
+     decisión de la 6.6 y no un olvido.
+   *
+   * El dibujo voltea con `currentColor` y una fotografía no: medido con
+   * `pintar_fichas.py`, en el tema oscuro con la ficha sin elegir la pieza se
+   * funde con el fondo entre el 12 y el 58 %. Se compararon cuatro salidas
+   * pintando la ficha de verdad -A como está hoy, B una placa clara detrás de
+   * la foto, C un reborde claro pegado a la silueta, D la ficha clara también
+   * en el tema oscuro- y gana D: es la única que no le pone nada a la
+   * fotografía -B y C son el cuadrado crema que la 6.1 rechazó del proveedor,
+   * solo que pintado por nosotros- y cambia el mueble, no la pieza, que es
+   * justo lo que este juego es: una etiqueta de cartulina clara sobre un
+   * armario oscuro. Al no heredar de aquí, `.ficha` se queda con los valores
+   * de `:root`, o sea siempre claros; `.ficha.elegida` sigue pintándose con
+   * `--realce`/`--realce-tinta`, que ya eran legibles en los dos temas. Se
+   * vuelve a mirar con `python herramientas/pintar_fichas.py`. */
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* El atributo `hidden` lo apaga el navegador con un `display: none` de
+   especificidad cero, así que cualquier `display` de esta hoja se lo come sin
+   avisar: el nodo sigue ahí, vacío, ocupando su hueco y su gap. Se vio midiendo
+   —el tablero perdió cuatro píxeles el día que se le colgó el panel del final,
+   escondido— y por eso se cierra aquí una vez y no elemento por elemento. */
+[hidden] {
+  display: none !important;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--papel);
+  color: var(--tinta);
+  font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+  -webkit-text-size-adjust: 100%;
+}
+
+#juego {
+  height: 100dvh;
+  outline: none;
+}
+
+/* --------------------------------------------------------------------------
+ * La pantalla: cuatro franjas, y solo la del armario da de sí
+ * ------------------------------------------------------------------------ */
+
+.pantalla {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--hueco);
+  padding: calc(var(--hueco) * 2) 0.7rem;
+  padding-top: max(calc(var(--hueco) * 2), env(safe-area-inset-top));
+  padding-bottom: max(calc(var(--hueco) * 2), env(safe-area-inset-bottom));
+}
+
+/* La cabecera es una fila: el botón de volver y, a su lado, el título con el
+   contexto. En fila y no apilada porque el botón no puede costar alto: cuando se
+   puso, el tablero de dos ejes pasaba en 320x568 con 45 px de sobra y esos ya
+   estaban contados. Al lado del texto no cuesta ninguno, porque las dos líneas
+   de texto miden ya lo que mide el botón. Hoy el más justo es n1-hs con 89 px,
+   pero el argumento no ha cambiado: lo que se le cuelgue aquí lo paga el
+   tablero. */
+.cabecera {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.titulos {
+  min-width: 0;
+}
+
+/* Los mismos 44 px que los botones de abajo, y aquí salen gratis. */
+.volver {
+  flex: 0 0 auto;
+  min-width: 2.75rem;
+  min-height: 2.75rem;
+  border: 1px solid var(--madera-honda);
+  border-radius: 6px;
+  background: transparent;
+  color: var(--tinta);
+  font: inherit;
+  font-size: 1.1rem;
+  line-height: 1;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.cabecera h1 {
+  margin: 0;
+  font-size: clamp(0.95rem, 4.2vw, 1.3rem);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  /* A dos líneas y basta. Desde la 6.5 la lupa reserva su sitio a la derecha y
+     el título tiene menos ancho; sin este tope, en un teléfono estrecho un
+     título largo podría ganar una tercera línea y comerse el alto que el
+     tablero tiene contado. Los títulos de hoy caben en dos líneas con ese ancho,
+     así que esto acota el peor caso sin recortar ninguno. */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* La lupa de «Ver de cerca», desde la 6.5, y la pista del avanzado, desde la
+   6.6: los mismos 44 px que el botón de volver, así que caben en el alto que
+   la cabecera ya medía y no le cuestan ninguno. Las dos reservan su sitio
+   siempre y se esconden con `visibility` —no con `hidden`— para que
+   seleccionar una pieza no refluya el título: el hueco ya está contado en la
+   medición de «recién abierto». La pista solo se construye cuando el ajuste es
+   avanzado y la plantilla no fuerza los nombres, así que en principiante y en
+   el nivel 3 esta regla no le cuesta nada a nadie: el botón no existe. */
+.lupa,
+.pista {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2.75rem;
+  min-height: 2.75rem;
+  border: 1px solid var(--madera-honda);
+  border-radius: 6px;
+  background: transparent;
+  color: var(--tinta);
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.lupa svg,
+.pista svg {
+  width: 1.35rem;
+  height: 1.35rem;
+}
+
+.lupa.oculta,
+.pista.oculta {
+  visibility: hidden;
+}
+
+.lupa:focus-visible,
+.pista:focus-visible {
+  outline: 3px solid var(--realce);
+  outline-offset: 2px;
+}
+
+/* El contexto sale en dos sitios —bajo el título de una partida y bajo los
+   botones del menú—, y en los dos hace lo mismo: decir de quién es el armario,
+   que es lo que decide los empates. Una sola regla para los dos, porque en el
+   menú se quedó con los márgenes de fábrica de un <p> y eso son casi cien
+   píxeles en 320 px de alto. Lo cazó la Fase 4 al pasar el menú de cuatro
+   niveles a seis. */
+.contexto {
+  margin: 0.1rem 0 0;
+  color: var(--apagado);
+  font-size: clamp(0.62rem, 2.6vw, 0.8rem);
+  line-height: 1.25;
+  /* Dos líneas y basta. El contexto del armario se enseña porque decide los
+     empates, pero no a costa de que no quepa el armario. */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* El armario mide lo suyo y se queda pegado a la cabecera; el sitio que sobre
+   se lo lleva el montón. Al revés —que el armario creciera y el montón midiera
+   lo justo— dejaba un agujero entre el título y la primera balda, y además el
+   montón es donde se sueltan las piezas: cuanto más grande, mejor. */
+.armario {
+  flex: 0 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: safe center;
+}
+
+.monton {
+  flex: 1 1 auto;
+}
+
+.barra {
+  flex: 0 0 auto;
+}
+
+/* --------------------------------------------------------------------------
+ * El armario de un solo eje: baldas apiladas
+ * ------------------------------------------------------------------------ */
+
+.baldas {
+  display: flex;
+  flex-direction: column;
+  gap: var(--hueco);
+}
+
+.balda {
+  border-radius: 5px;
+  background: var(--madera);
+  padding: calc(var(--hueco) * 0.8) calc(var(--hueco) * 1.2);
+  border-bottom: 2px solid var(--madera-honda);
+}
+
+.rotulo {
+  margin: 0 0 calc(var(--hueco) * 0.6);
+  font-size: clamp(0.58rem, 2.4vw, 0.75rem);
+  font-weight: 600;
+  line-height: 1.1;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--apagado);
+}
+
+/* Sin rótulo, el número de huecos ES el rótulo: es lo único que identifica la
+   balda, y por eso las capacidades salen todas distintas. */
+.rotulo.sin-rotulo::after {
+  content: ' huecos';
+}
+
+.huecos {
+  display: flex;
+  gap: calc(var(--hueco) * 1.2);
+  align-items: stretch;
+}
+
+.huecos > * {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.huecos.mal {
+  outline: 2px solid var(--error);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* --------------------------------------------------------------------------
+ * El armario de dos ejes: una rejilla con rótulos arriba y a la izquierda
+ * ------------------------------------------------------------------------ */
+
+/* Los números de aquí abajo no son de gusto: son los que hicieron que el tablero
+   de dos ejes cupiera en 320x568, cuando era el único que iba justo. Con los que
+   había (gap 1.1, padding 0.6) pedía 2 px más de los que hay. Desde la Fase 6 ya
+   no va justo —una pieza por casilla, y es el más holgado de los ocho— así que
+   estos números tienen sitio para crecer si la maqueta lo pide; lo que no cambia
+   es cómo se decide. Antes de tocarlos, pasar
+   `python herramientas/comprobar_pantalla.py --solo 320x568`. */
+.rejilla {
+  display: grid;
+  grid-template-columns: minmax(3.2rem, auto) repeat(var(--columnas, 3), 1fr);
+  gap: calc(var(--hueco) * 0.8);
+  align-items: stretch;
+}
+
+.rejilla .rotulo {
+  margin: 0;
+  align-self: center;
+}
+
+.rejilla .rotulo.columna {
+  text-align: center;
+}
+
+.rejilla .celda {
+  background: var(--madera);
+  border-bottom: 2px solid var(--madera-honda);
+  border-radius: 4px;
+  padding: calc(var(--hueco) * 0.35);
+}
+
+/* Las casillas de una fila miden todas lo mismo aunque tengan distinto número
+   de huecos, que es lo que mantiene la rejilla legible; los huecos se centran
+   dentro para que la madera que sobra no parezca un hueco más. */
+.rejilla .celda .huecos {
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* Y aquí los huecos no se estiran, que es lo que dice el comentario de arriba y
+   lo que esta hoja no hacía.
+ *
+ * `.huecos > *` lleva `flex: 1 1 0` porque en una balda de un eje los huecos van
+ * **en fila** y eso los hace de anchos iguales. En la rejilla van **en columna**,
+ * así que ese mismo `flex-basis: 0` deja de repartir ancho y pasa a repartir
+ * alto: la ficha ya no mide su contenido sino el trozo de casilla que le toca,
+ * clavada en `--ficha-alto`. Se veía sin dibujos y nadie lo miró —una casilla de
+ * una pieza enseñaba una ficha del alto de dos, justo lo que el comentario de
+ * arriba dice que no debe pasar— y es lo que bloqueaba la Fase 6 entera: con la
+ * ficha clavada en 30 px no cabe un dibujo encima de un nombre **por mucha
+ * pantalla que sobre**, y como `.ficha` tiene `overflow: hidden` el dibujo no
+ * desborda a la vista, se corta en silencio.
+ *
+ * Está medido y no razonado: el tablero de dos ejes pasa de no admitir ningún
+ * dibujo a admitir 22 px solo con esta regla, y con una pieza por casilla a 64.
+ * `python herramientas/medir_iconos.py`. */
+.rejilla .celda .huecos > * {
+  flex: 0 0 auto;
+}
+
+/* --------------------------------------------------------------------------
+ * Las piezas y los huecos
+ * ------------------------------------------------------------------------ */
+
+.ficha,
+.hueco {
+  min-height: var(--ficha-alto);
+  border-radius: 4px;
+  font: inherit;
+  font-size: var(--ficha-texto);
+  line-height: 1.1;
+  padding: 0.15rem 0.25rem;
+  cursor: pointer;
+  /* Sin esto, un toque rápido en un móvil dispara el zoom por doble toque y el
+     segundo toque de «pieza y hueco» se pierde. */
+  touch-action: manipulation;
+}
+
+.ficha {
+  /* --pieza-*, y no --madera-honda/--ficha-fondo/--tinta a secas: es lo que
+     hace que la ficha se quede clara en el tema oscuro. Ver el comentario de
+     la 6.6 donde se define la paleta oscura. */
+  border: 1px solid var(--pieza-borde);
+  background: var(--pieza-fondo);
+  color: var(--pieza-tinta);
+  box-shadow: 0 1px 0 var(--sombra);
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+/* La ficha con recurso, desde la Fase 6.
+ *
+ * `-webkit-box` con `line-clamp` sirve para recortar un texto a dos líneas y no
+ * para colocar dos cosas, así que en cuanto hay recurso la ficha pasa a ser una
+ * columna y **el recorte se lo lleva el nombre**, que es de quien era. La ficha
+ * sin recurso se queda como estaba: los recursos entran por tandas y las dos
+ * fichas van a convivir.
+ *
+ * El recurso va **encima** del nombre y no al lado, y eso está medido y no
+ * elegido: en fila el nombre pierde ancho y «Sintetizador» se corta ya con un
+ * dibujo de 10 px, mientras que apilado el techo de «cabe» y el de «se sigue
+ * leyendo» coinciden. Ver `herramientas/medir_iconos.py`.
+ *
+ * Y va **anclado arriba y no centrado**, que es la mitad en pantalla de la línea
+ * de suelo común que la entrega 6.2 dejó aplazada a la 6.4. Las fichas de una
+ * balda se estiran todas al alto de la más alta, así que con el contenido
+ * centrado **una pieza con el nombre en dos líneas bajaba su recurso media
+ * línea** respecto de la de al lado: medido en 320×568, **5,3 px sobre una caja
+ * de 34**, o sea más que los 3,8 px que separan al violín de la viola. La
+ * escalera que la 6.2 midió para que los cuatro arcos se leyeran se la comía la
+ * maquetación, y eso no se veía desde el preparador: allí los archivos estaban
+ * bien. Con `flex-start` las cajas de una balda comparten arriba y abajo, y el
+ * suelo que trae el archivo llega a la pantalla. Lo mide `pruebas/medidas.js`. */
+.ficha.con-recurso {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 1px;
+}
+
+/* `flex: none` para que la columna no se coma el dibujo por lo alto: `.ficha`
+   lleva `overflow: hidden`, así que ahí no desbordaría a la vista, se cortaría
+   en silencio.
+ *
+ * Y `max-width: 100%`, que costó una medición. Sin él el dibujo mide 40 px que
+ * no se pueden encoger, y eso le pone un suelo de 50 px al **min-content de la
+ * ficha**; en la rejilla de dos ejes las columnas son `1fr`, cuyo mínimo
+ * automático es justo ese min-content, así que las tres columnas subían a la
+ * vez y el tablero pedía 330 px de los 320 que hay. Con `max-width` el suelo
+ * vuelve a ser el nombre, como antes de los dibujos, y donde de verdad no cabe
+ * el dibujo **se escala** en vez de desbordar: un SVG con viewBox se hace
+ * pequeño, no se corta. Que no se encoja donde no debe lo mide
+ * `comprobar_pantalla.py`, que se planta si alguno baja de `--ficha-recurso`. */
+.ficha.con-recurso svg,
+.ficha.con-recurso img {
+  flex: none;
+  display: block;
+  width: var(--ficha-recurso);
+  max-width: 100%;
+  height: auto;
+  aspect-ratio: 1;
+}
+
+/* Y la fotografía, desde la entrega 6.4.
+ *
+ * Comparte las reglas del dibujo a propósito: los dos ocupan la misma caja, y
+ * **eso es lo que hace que 34 px sigan siendo 34 px** cuando una tanda cambia de
+ * materia. Si la fotografía tuviera su propio tamaño, el número que decidió
+ * `comprobar_pantalla.py --con-las-59` habría que volver a decidirlo.
+ *
+ * Lo que se temía es que un `<img>` **trae tamaño propio** y un `<svg>` con
+ * `viewBox` no, así que la fotografía le pusiera un suelo al min-content de la
+ * ficha; en la rejilla de dos ejes el mínimo de una columna `1fr` es el
+ * min-content de su celda, que es como la tanda 1 acabó pidiendo 330 px de los
+ * 320 que hay. **Medido: no lo pone.** Con el `width` de arriba el min-content
+ * de una ficha con fotografía es el mismo que sin ella, y quitando el
+ * `max-width` suben las dos materias por igual, a 44 px: o sea que el suelo lo
+ * pone el `width` y no el tamaño intrínseco. Lo que se añadió es quien lo diga
+ * si deja de ser verdad, en `web/pruebas/medidas.js`.
+ *
+ * `object-fit: contain` no hace falta hoy —el preparador escribe cuadrados— y
+ * está puesto para que una fotografía que no lo fuera se viera mal encajada en
+ * vez de deformada, que es un fallo que se ve. */
+.ficha.con-recurso img {
+  object-fit: contain;
+}
+
+.ficha.con-recurso .nombre {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  min-width: 0;
+}
+
+.ficha.elegida {
+  background: var(--realce);
+  color: var(--realce-tinta);
+  border-color: var(--realce);
+}
+
+.ficha.mal {
+  border-color: var(--error);
+  outline: 2px solid var(--error);
+  outline-offset: -3px;
+}
+
+.hueco {
+  border: 1px dashed var(--madera-honda);
+  background: var(--hueco-fondo);
+}
+
+.ficha:focus-visible,
+.hueco:focus-visible {
+  outline: 3px solid var(--realce);
+  outline-offset: 2px;
+}
+
+/* --------------------------------------------------------------------------
+ * El montón
+ * ------------------------------------------------------------------------ */
+
+/* En flujo y no en rejilla, y la diferencia se midió: con columnas iguales, un
+   «Gong» ocupa lo que una «Flauta travesera» y los 16 nombres del tablero de
+   dos ejes pedían una fila más de la que cabe en 320x568. Dejando que cada
+   ficha mida lo suyo, los mismos 16 entran en menos filas. */
+.monton {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  gap: calc(var(--hueco) * 1.2);
+  padding: calc(var(--hueco) * 1.2);
+  border: 1px dashed var(--madera-honda);
+  border-radius: 5px;
+  min-height: calc(var(--ficha-alto) + var(--hueco) * 2.4);
+}
+
+.monton .ficha {
+  flex: 0 1 auto;
+  min-width: 3.2rem;
+  max-width: 100%;
+}
+
+.monton.vacio::before {
+  content: 'El montón está vacío';
+  width: 100%;
+  align-self: center;
+  text-align: center;
+  color: var(--apagado);
+  font-size: var(--ficha-texto);
+}
+
+/* --------------------------------------------------------------------------
+ * La barra de abajo
+ * ------------------------------------------------------------------------ */
+
+.aviso {
+  margin: 0 0 calc(var(--hueco) * 1.2);
+  font-size: clamp(0.66rem, 2.9vw, 0.85rem);
+  line-height: 1.25;
+  color: var(--apagado);
+  min-height: 1.25em;
+}
+
+.aviso[data-estado='bien'] {
+  color: var(--acierto);
+  font-weight: 600;
+}
+
+.aviso[data-estado='mal'] {
+  color: var(--error);
+}
+
+.botones {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.botones button {
+  flex: 1 1 auto;
+  /* 44 px es el mínimo con el que un dedo acierta a la primera. Es lo único de
+     esta hoja que no se encoge con la pantalla, y no se encoge a propósito. */
+  min-height: 2.75rem;
+  border-radius: 6px;
+  font: inherit;
+  font-size: clamp(0.8rem, 3.4vw, 1rem);
+  font-weight: 600;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.botones .principal {
+  border: 1px solid var(--realce);
+  background: var(--realce);
+  color: var(--realce-tinta);
+}
+
+.botones .secundario {
+  flex: 0 0 auto;
+  padding: 0 0.9rem;
+  border: 1px solid var(--madera-honda);
+  background: transparent;
+  color: var(--tinta);
+}
+
+.botones button:focus-visible,
+.volver:focus-visible,
+.opcion:focus-visible,
+.tablero:focus-visible {
+  outline: 3px solid var(--realce);
+  outline-offset: 2px;
+}
+
+/* --------------------------------------------------------------------------
+ * El menú: de quién es el armario, y qué armario se abre
+ *
+ * Dos preguntas y no doce botones. Cuatro plantillas por tres armarios no caben
+ * en 320 px sin apretar los botones por debajo de lo que un dedo acierta, y
+ * además se piensa así: primero de quién es y luego qué hay que ordenar. El
+ * porqué largo está en js/pantalla_menu.js.
+ * ------------------------------------------------------------------------ */
+
+.eleccion {
+  flex: 0 0 auto;
+}
+
+.opciones {
+  display: flex;
+  gap: 0.4rem;
+}
+
+.opcion {
+  flex: 1 1 0;
+  min-width: 0;
+  min-height: 2.75rem;
+  padding: 0.2rem 0.3rem;
+  border: 1px solid var(--madera-honda);
+  border-radius: 6px;
+  background: var(--ficha-fondo);
+  color: var(--tinta);
+  font: inherit;
+  font-size: clamp(0.62rem, 2.7vw, 0.82rem);
+  line-height: 1.15;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.opcion.elegida {
+  border-color: var(--realce);
+  background: var(--realce);
+  color: var(--realce-tinta);
+  font-weight: 600;
+}
+
+/* Se lleva el sitio que sobra y deja las filas centradas en él, en vez de
+   estirarlas: una fila de menú de 90 px de alto en un móvil grande parece otra
+   cosa distinta de la que es.
+ *
+ * El hueco entre filas es de un píxel desde la Fase 5, y sale de medir. Con los
+ * ocho niveles dentro, el menú pedía 10 px más de los que hay en 320×568, y lo
+ * primero que se midió fue de dónde sacarlos: **un botón de nivel mide 44 px y
+ * su contenido 25**, o sea que está pegado al suelo del área táctil y apretarle
+ * el texto no daría ni un píxel. Los 44 px no se tocan y ese es justo el motivo
+ * por el que están escritos abajo.
+ *
+ * Lo único que sobraba eran los huecos *entre* botones —siete a casi cinco
+ * píxeles— y sobraban de verdad: con cuatro filas el hueco separaba, con ocho
+ * el borde ya separa y el hueco solo aleja. Al juntarlas, además, la lista se
+ * lee como lo que es, una progresión, y no como ocho cosas sueltas. */
+.tableros {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1px;
+}
+
+.tablero {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  min-height: 2.75rem;
+  padding: calc(var(--hueco) * 1.2) 0.6rem;
+  border: 1px solid var(--madera-honda);
+  border-bottom-width: 2px;
+  border-radius: 5px;
+  background: var(--madera);
+  color: var(--tinta);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.tablero .linea {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+  color: var(--apagado);
+  font-size: clamp(0.55rem, 2.3vw, 0.72rem);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.tablero .titulo {
+  font-size: clamp(0.78rem, 3.4vw, 1rem);
+  font-weight: 600;
+  line-height: 1.15;
+}
+
+.tablero[disabled] {
+  cursor: default;
+  opacity: 0.55;
+}
+
+.menu .botones .secundario {
+  flex: 1 1 auto;
+}
+
+/* --------------------------------------------------------------------------
+ * El final de un armario, donde estaba el montón
+ * ------------------------------------------------------------------------ */
+
+/* Ocupa el sitio que deja el montón al vaciarse, así que se lleva el hueco
+   sobrante igual que él: si midiera lo justo, el armario resuelto subiría de
+   golpe al comprobar y la pantalla daría un salto. */
+.resultado {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: safe center;
+  gap: 0.25rem;
+  text-align: center;
+}
+
+.resultado .rotulo {
+  margin: 0;
+}
+
+/* El candado es lo único de este juego que se enseña en grande, y se lo puede
+   permitir porque sale cuando el montón ya no ocupa nada. */
+.candado {
+  margin: 0;
+  font-size: clamp(1.6rem, 8vw, 2.6rem);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--acierto);
+}
+
+.resultado p {
+  margin: 0;
+  font-size: clamp(0.66rem, 2.8vw, 0.85rem);
+  line-height: 1.4;
+}
+
+.resultado .resistidas {
+  margin-top: 0.35rem;
+  font-size: clamp(0.72rem, 3vw, 0.92rem);
+}
+
+/* «Ver ficha», desde la 6.7: un botón por pieza del tablero, del mismo tamaño
+   táctil que los demás botones de esta pantalla y en una fila que se envuelve
+   -pueden ser hasta trece piezas- en vez de una lista larga. */
+.ver-fichas {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.4rem;
+  margin-top: 0.15rem;
+}
+
+.ver-ficha-boton {
+  min-height: 2.75rem;
+  padding: 0 0.8rem;
+  border: 1px solid var(--madera-honda);
+  border-radius: 6px;
+  background: transparent;
+  color: var(--tinta);
+  font: inherit;
+  font-size: clamp(0.72rem, 3vw, 0.88rem);
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.ver-ficha-boton:focus-visible {
+  outline: 3px solid var(--realce);
+  outline-offset: 2px;
+}
+
+/* --------------------------------------------------------------------------
+ * Las hojas de texto: ajustes, créditos y progreso
+ * ------------------------------------------------------------------------ */
+
+/* Una contradicción son dos datos y el segundo explica al primero, así que van
+   en dos líneas y no en una: en 320 px, «bien por el uso, mal por
+   Hornbostel-Sachs» al lado del nombre parte por donde no se entiende. */
+.contradicciones {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.contradicciones li {
+  display: flex;
+  flex-direction: column;
+}
+
+.contradicciones .pieza {
+  font-weight: 600;
+  font-size: clamp(0.78rem, 3.2vw, 1rem);
+}
+
+.contradicciones .detalle {
+  color: var(--apagado);
+  font-size: clamp(0.66rem, 2.8vw, 0.85rem);
+}
+
+.hoja .cuerpo {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding-top: 0.3rem;
+}
+
+.hoja p {
+  margin: 0;
+  font-size: clamp(0.72rem, 3vw, 0.92rem);
+  line-height: 1.45;
+}
+
+.hoja .firma {
+  font-weight: 600;
+}
+
+.grupo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.nota {
+  color: var(--apagado);
+}
+
+.hoja .nota,
+.hoja .aviso {
+  font-size: clamp(0.66rem, 2.8vw, 0.85rem);
+}
+
+.hoja .aviso {
+  margin: 0;
+}
+
+/* Borrar el progreso no se puede deshacer, así que el botón lo dice antes de
+   que lo digan las letras. */
+.botones .peligro {
+  border: 1px solid var(--error);
+  background: transparent;
+  color: var(--error);
+}
+
+.botones .peligro[disabled] {
+  border-color: var(--madera-honda);
+  color: var(--apagado);
+  cursor: default;
+}
+
+/* --------------------------------------------------------------------------
+ * «Ver de cerca»: el visor casi a pantalla completa, desde la 6.5
+ *
+ * Un visor de fotografía es un lightbox: fondo oscuro en los dos temas, no la
+ * paleta del mueble. Por eso su cromo —el aspa de cerrar y el nombre— va en
+ * claro sobre oscuro y fijo, y no con `var(--tinta)`. Las piezas vienen con
+ * fondo transparente, así que sobre el oscuro se leen flotando, que es justo lo
+ * que se quiere de una lupa.
+ *
+ * Y no se desplaza, como ninguna pantalla de este juego: es una columna
+ * —barra, foto, nombre— donde la foto se lleva el alto que quede y se ajusta con
+ * `object-fit: contain`, así que no desborda sea cual sea su lado. Lo mide
+ * `pruebas/visor.js` en los cuatro teléfonos, con una pieza con detalle y con el
+ * violonchelo, que cae a su miniatura.
+ * ------------------------------------------------------------------------ */
+
+.visor {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  background: rgba(0, 0, 0, 0.86);
+  padding: max(0.6rem, env(safe-area-inset-top)) max(0.6rem, env(safe-area-inset-right))
+    max(0.6rem, env(safe-area-inset-bottom)) max(0.6rem, env(safe-area-inset-left));
+}
+
+.visor-dialogo {
+  flex: 1 1 auto;
+  min-height: 0;
+  width: 100%;
+  max-width: 720px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.visor-barra {
+  flex: 0 0 auto;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.visor-cerrar {
+  min-width: 2.75rem;
+  min-height: 2.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+  font: inherit;
+  font-size: 1.2rem;
+  line-height: 1;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.visor-cerrar:focus-visible {
+  outline: 3px solid #fff;
+  outline-offset: 2px;
+}
+
+/* La zona de la foto se lleva todo el alto que quede y la centra. `min-height: 0`
+   para que pueda encogerse por debajo de su contenido en vez de empujar. */
+.visor-marco {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.visor-foto {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.visor-nombre {
+  flex: 0 0 auto;
+  margin: 0;
+  text-align: center;
+  color: #fff;
+  font-size: clamp(0.85rem, 3.6vw, 1.1rem);
+  line-height: 1.25;
+}
+
+/* «Ver ficha», desde la 6.7: un segundo botón en la misma barra, a la
+   izquierda del de cerrar gracias al margen automático, para que cuando no
+   hay ficha que ofrecer —`hidden`— el de cerrar se quede donde siempre. Con
+   texto y no solo icono, porque a diferencia de la lupa y la pista de la
+   cabecera del tablero, aquí no hay una fila de rótulos al lado que ya diga
+   qué hace. */
+.visor-ficha-boton {
+  margin-right: auto;
+  min-height: 2.75rem;
+  padding: 0 0.85rem;
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+  font: inherit;
+  font-size: clamp(0.72rem, 3vw, 0.85rem);
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.visor-ficha-boton:focus-visible {
+  outline: 3px solid #fff;
+  outline-offset: 2px;
+}
+
+/* El panel ocupa el mismo sitio que la foto y se desplaza si hace falta: es
+   la única zona de este visor a la que se le permite, porque el número de
+   campos varía pieza a pieza —de tres, lo que trae toda foto de Commons, a
+   nueve, con el bloque del instrumento puesto— y fijarle un alto sería
+   recortar la ficha de las piezas del Met o dejar un hueco vacío en las
+   demás. */
+.visor-ficha {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  color: #fff;
+}
+
+.ficha-contenido {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0.25rem 0.1rem 0.5rem;
+  font-size: clamp(0.75rem, 3.2vw, 0.92rem);
+  line-height: 1.4;
+}
+
+.ficha-campo {
+  margin: 0;
+}
+
+.ficha-etiqueta {
+  color: rgba(255, 255, 255, 0.68);
+}
+
+.ficha-contenido a {
+  color: #fff;
+}
+
+.ficha-subtitulo {
+  margin: 0.35rem 0 0;
+  font-size: clamp(0.78rem, 3.2vw, 0.95rem);
+  font-weight: 600;
+  border-top: 1px solid rgba(255, 255, 255, 0.25);
+  padding-top: 0.5rem;
+}
+
+/* -------------------------------------------------------------------------- */
+
+.tarjeta.fallo {
+  margin: 1.5rem;
+  padding: 1rem;
+  border: 1px solid var(--error);
+  border-radius: 6px;
+}
+
+.sin-js {
+  margin: 2rem;
+  color: var(--apagado);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .ficha,
+  .hueco {
+    transition: background-color 90ms ease-out, border-color 90ms ease-out;
+  }
+}

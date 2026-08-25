@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>¿Cabe «Ver de cerca»?</title>
+    <link rel="stylesheet" href="pruebas.css" />
+  </head>
+  <body>
+    <h1>¿Cabe «Ver de cerca», y cae bien el violonchelo?</h1>
+
+    <p>
+      El visor es casi a pantalla completa, así que la regla de siempre —<strong>ninguna pantalla
+      se desplaza</strong>— también es suya. Aquí se abre en los cuatro teléfonos, con una pieza que
+      tiene detalle de 1024 px y con el <strong>violonchelo</strong>, que no lo tiene y cae a su
+      miniatura. Se mide que nada se sale, que el aspa de cerrar es un objetivo de
+      <code>44&nbsp;px</code> y que la fotografía que se pide es la que toca: el detalle cuando lo
+      hay, la miniatura cuando no. Y que del visor no sale más que el nombre de la pieza.
+    </p>
+    <p>
+      La resolución en pantalla —si 1024 px bastan— no se decide aquí con un número de píxeles: se
+      mira con la lupa abierta, que es lo que esta entrega tenía que contestar. Esto comprueba que
+      el visor <em>cabe</em>; el taller de abajo es para <em>mirarlo</em>.
+    </p>
+    <p>La corre sola <code>python herramientas/comprobar_pantalla.py</code>.</p>
+
+    <pre id="informe">Midiendo…</pre>
+
+    <h2>El taller donde se ha mirado</h2>
+    <p>
+      Los marcos, para poder mirar con los ojos lo que los números acaban de decir. No forma parte
+      de la comprobación.
+    </p>
+    <div id="marcos" class="marcos"></div>
+
+    <script type="module" src="visor.js"></script>
+  </body>
+</html>

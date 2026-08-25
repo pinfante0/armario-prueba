@@ -1,0 +1,481 @@
+{
+  "version": 1,
+  "fichas": {
+    "violin": {
+      "fotografia": {
+        "autor": "Just plain Bill",
+        "fecha": "2013-01-13",
+        "licencia": "CC0-1.0",
+        "pagina": "https://commons.wikimedia.org/w/index.php?oldid=884763464"
+      }
+    },
+    "viola": {
+      "fotografia": {
+        "autor": "Just plain Bill",
+        "fecha": "2006-03-15",
+        "licencia": "dominio-publico",
+        "pagina": "https://commons.wikimedia.org/w/index.php?oldid=1002424570"
+      }
+    },
+    "violonchelo": {
+      "fotografia": {
+        "autor": "Georg Feitscher",
+        "fecha": "2010-02-11",
+        "licencia": "CC-BY-3.0",
+        "pagina": "https://commons.wikimedia.org/w/index.php?oldid=970192307"
+      }
+    },
+    "contrabajo": {
+      "fotografia": {
+        "autor": "AndrewKepert",
+        "fecha": "2003-12-17",
+        "licencia": "CC-BY-SA-3.0",
+        "pagina": "https://commons.wikimedia.org/w/index.php?oldid=947180193"
+      }
+    },
+    "clarinete": {
+      "fotografia": {
+        "autor": "Leitner & Kraus GmbH; edición de Gisbert K",
+        "fecha": "2019-10-31",
+        "licencia": "CC-BY-SA-4.0",
+        "pagina": "https://commons.wikimedia.org/w/index.php?oldid=1013459503"
+      }
+    },
+    "arpa": {
+      "fotografia": {
+        "autor": "Museum fur Kunst und Gewerbe Hamburg",
+        "licencia": "CC0-1.0",
+        "pagina": "https://commons.wikimedia.org/w/index.php?oldid=1030054601"
+      }
+    },
+    "saxofon": {
+      "fotografia": {
+        "autor": "Ryan Hoots",
+        "licencia": "CC-BY-4.0",
+        "pagina": "https://commons.wikimedia.org/w/index.php?oldid=1234276098"
+      }
+    },
+    "organo": {
+      "fotografia": {
+        "autor": "The Metropolitan Museum of Art",
+        "licencia": "dominio-publico",
+        "pagina": "https://www.metmuseum.org/art/collection/search/503670"
+      },
+      "instrumento": {
+        "museo": "The Metropolitan Museum of Art, Nueva York",
+        "coleccion": "Purchase, Margaret M. Hess Gift, 1982",
+        "inventario": "1982.59.1-.105",
+        "constructor": "Thomas Appleton",
+        "fecha": "1830",
+        "procedencia": "Estados Unidos"
+      }
+    },
+    "acordeon": {
+      "fotografia": {
+        "autor": "Wiki Taro",
+        "licencia": "dominio-publico",
+        "pagina": "https://commons.wikimedia.org/w/index.php?oldid=1178133703"
+      }
+    },
+    "armonica": {
+      "fotografia": {
+        "autor": "George Leung",
+        "licencia": "CC-BY-SA-3.0",
+        "pagina": "https://commons.wikimedia.org/w/index.php?oldid=1114826041"
+      }
+    },
+    "bajo-electrico": {
+      "fotografia": {
+        "autor": "Ethan Prater",
+        "licencia": "dominio-publico",
+        "pagina": "https://commons.wikimedia.org/w/index.php?oldid=1177191686"
+      }
+    },
+    "bandurria": {
+      "fotografia": {
+        "autor": "Emma dusepo, obra derivada de Villanueva",
+        "fecha": "2011-11-18",
+        "licencia": "CC-BY-3.0",
+        "pagina": "https://commons.wikimedia.org/wiki/File:Bandurria1_wbg.jpg"
+      }
+    },
+    "bombo": {
+      "fotografia": {
+        "autor": "The Metropolitan Museum of Art",
+        "fecha": "2017-07-12",
+        "licencia": "CC0-1.0",
+        "pagina": "https://www.metmuseum.org/art/collection/search/504262"
+      },
+      "instrumento": {
+        "museo": "The Metropolitan Museum of Art, Nueva York",
+        "coleccion": "The Crosby Brown Collection of Musical Instruments, 1889",
+        "inventario": "89.4.2523",
+        "constructor": "John G. Pike",
+        "fecha": "1860-1880",
+        "procedencia": "Estados Unidos"
+      }
+    },
+    "bongos": {
+      "fotografia": {
+        "autor": "Muzyczny.pl",
+        "fecha": "2012-02-10",
+        "licencia": "CC-BY-SA-4.0",
+        "pagina": "https://commons.wikimedia.org/wiki/File:Bongos_Meinl_HB100-NT.jpg"
+      }
+    },
+    "caja": {
+      "fotografia": {
+        "autor": "Federico Cardoner",
+        "fecha": "2016-07-20",
+        "licencia": "CC-BY-2.0",
+        "pagina": "https://commons.wikimedia.org/wiki/File:Red_Wooden_snare_drum_isolated_on_a_white_background_(27825736163).jpg"
+      }
+    },
+    "cajon": {
+      "fotografia": {
+        "autor": "Stephen Head; recorte retocado digitalmente",
+        "licencia": "CC-BY-SA-4.0",
+        "pagina": "https://commons.wikimedia.org/wiki/File:Kopf_Percussion_Cajon_Drum.jpg"
+      }
+    },
+    "carrillon": {
+      "fotografia": {
+        "autor": "Detlef Meier",
+        "licencia": "CC-BY-SA-3.0",
+        "pagina": "https://commons.wikimedia.org/w/index.php?oldid=974903516"
+      }
+    },
+    "castanuelas": {
+      "fotografia": {
+        "autor": "Rijksmuseum Amsterdam",
+        "licencia": "CC0-1.0",
+        "pagina": "https://commons.wikimedia.org/w/index.php?title=File:Castagnetten,_BK-NM-7457.jpg&oldid=1256813116"
+      }
+    },
+    "celesta": {
+      "fotografia": {
+        "autor": "Schiedmayer Celesta GmbH",
+        "licencia": "CC-BY-SA-4.0",
+        "pagina": "https://commons.wikimedia.org/w/index.php?oldid=1119019998"
+      }
+    },
+    "claves": {
+      "fotografia": {
+        "autor": "Autor no consignado en la ficha de Commons",
+        "licencia": "CC-BY-SA-3.0",
+        "pagina": "https://commons.wikimedia.org/w/index.php?oldid=1002137539"
+      }
+    },
+    "conga": {
+      "fotografia": {
+        "autor": "Nationaal Museum van Wereldculturen",
+        "fecha": "2018-03-30",
+        "licencia": "CC-BY-SA-3.0",
+        "pagina": "https://commons.wikimedia.org/w/index.php?oldid=864861861"
+      }
+    },
+    "corneta": {
+      "fotografia": {
+        "autor": "The Metropolitan Museum of Art",
+        "licencia": "CC0-1.0",
+        "pagina": "https://commons.wikimedia.org/w/index.php?oldid=878034335"
+      },
+      "instrumento": {
+        "museo": "The Metropolitan Museum of Art, Nueva York",
+        "coleccion": "Rogers Fund, 1975",
+        "inventario": "1975.270a, b",
+        "constructor": "Thomas Key",
+        "fecha": "1811",
+        "procedencia": "Reino Unido"
+      }
+    },
+    "djembe": {
+      "fotografia": {
+        "autor": "Djembe Art",
+        "fecha": "2012-01-18",
+        "licencia": "CC-BY-SA-3.0",
+        "pagina": "https://commons.wikimedia.org/w/index.php?oldid=1153388853"
+      }
+    },
+    "dulzaina": {
+      "fotografia": {
+        "autor": "Ferbr1",
+        "fecha": "2010-03-17",
+        "licencia": "CC-BY-SA-4.0",
+        "pagina": "https://commons.wikimedia.org/w/index.php?title=Dol%C3%A7aina.png&oldid=1208181588"
+      }
+    },
+    "fagot": {
+      "fotografia": {
+        "autor": "Yamaha Corporation",
+        "licencia": "CC-BY-SA-4.0",
+        "pagina": "https://commons.wikimedia.org/w/index.php?oldid=824627482"
+      }
+    },
+    "flauta-dulce": {
+      "fotografia": {
+        "autor": "The Metropolitan Museum of Art",
+        "licencia": "CC0-1.0",
+        "pagina": "https://commons.wikimedia.org/w/index.php?oldid=671441931"
+      },
+      "instrumento": {
+        "museo": "The Metropolitan Museum of Art, Nueva York",
+        "coleccion": "The Crosby Brown Collection of Musical Instruments, 1889",
+        "inventario": "89.4.912",
+        "constructor": "Thomas Coenraet Boekhout",
+        "fecha": "ca. 1700",
+        "procedencia": "Países Bajos"
+      }
+    },
+    "flauta-travesera": {
+      "fotografia": {
+        "autor": "Tubamirum",
+        "licencia": "CC-BY-SA-4.0",
+        "pagina": "https://commons.wikimedia.org/w/index.php?oldid=1255577835"
+      }
+    },
+    "gaita": {
+      "fotografia": {
+        "autor": "Policisne",
+        "licencia": "CC-BY-SA-3.0",
+        "pagina": "https://commons.wikimedia.org/w/index.php?oldid=1147485693"
+      }
+    },
+    "gong": {
+      "fotografia": {
+        "autor": "Wereldmuseum Amsterdam (antes Tropenmuseum)",
+        "licencia": "CC-BY-SA-3.0",
+        "pagina": "https://commons.wikimedia.org/w/index.php?oldid=1231218012"
+      }
+    },
+    "guiro": {
+      "fotografia": {
+        "autor": "Enfo",
+        "licencia": "CC-BY-SA-3.0",
+        "pagina": "https://commons.wikimedia.org/w/index.php?oldid=1175042560"
+      }
+    },
+    "guitarra": {
+      "fotografia": {
+        "autor": "David Chavanel (imagen original de Martin Möller)",
+        "fecha": "2010-02-28",
+        "licencia": "CC-BY-SA-3.0",
+        "pagina": "https://commons.wikimedia.org/w/index.php?title=File:Classical_Guitar.jpg&oldid=861753617"
+      }
+    },
+    "guitarra-electrica": {
+      "fotografia": {
+        "autor": "Pabloserka",
+        "licencia": "CC-BY-SA-4.0",
+        "pagina": "https://commons.wikimedia.org/w/index.php?oldid=1205265728"
+      }
+    },
+    "laud": {
+      "fotografia": {
+        "autor": "Arent",
+        "fecha": "2021-04-24",
+        "licencia": "CC-BY-SA-4.0",
+        "pagina": "https://commons.wikimedia.org/wiki/File:Spaanse_Laud.png"
+      }
+    },
+    "mandolina": {
+      "fotografia": {
+        "autor": "Museum für Kunst und Gewerbe Hamburg",
+        "licencia": "CC0-1.0",
+        "pagina": "https://commons.wikimedia.org/w/index.php?oldid=1086295565"
+      }
+    },
+    "maracas": {
+      "fotografia": {
+        "autor": "Axel Heymann",
+        "licencia": "CC-BY-SA-3.0",
+        "pagina": "https://commons.wikimedia.org/w/index.php?oldid=1129240144"
+      }
+    },
+    "marimba": {
+      "fotografia": {
+        "autor": "Marimbaone",
+        "licencia": "CC-BY-SA-3.0",
+        "pagina": "https://commons.wikimedia.org/w/index.php?oldid=1133567702"
+      }
+    },
+    "melodica": {
+      "fotografia": {
+        "autor": "Autor no consignado en la ficha de Commons (subida por Laubrau~commonswiki)",
+        "licencia": "dominio-publico",
+        "pagina": "https://commons.wikimedia.org/w/index.php?oldid=1088935377"
+      }
+    },
+    "metalofono": {
+      "fotografia": {
+        "autor": "Ferbr1; recorte retocado digitalmente",
+        "fecha": "2012-02-10",
+        "licencia": "CC-BY-SA-3.0",
+        "pagina": "https://commons.wikimedia.org/w/index.php?oldid=1107983201"
+      }
+    },
+    "oboe": {
+      "fotografia": {
+        "autor": "Fratelli Patricola, edicion de Gisbert K",
+        "licencia": "CC-BY-SA-4.0",
+        "pagina": "https://commons.wikimedia.org/w/index.php?oldid=946964612"
+      }
+    },
+    "pandereta": {
+      "fotografia": {
+        "autor": "Collectie Wereldmuseum (v/h Tropenmuseum), part of the National Museum of World Cultures",
+        "fecha": "2012-07-21",
+        "licencia": "CC-BY-SA-3.0",
+        "pagina": "https://commons.wikimedia.org/w/index.php?oldid=1109456933"
+      }
+    },
+    "pandero": {
+      "fotografia": {
+        "autor": "Ferbr1; recorte retocado digitalmente",
+        "fecha": "2012-02-09",
+        "licencia": "CC-BY-SA-3.0",
+        "pagina": "https://commons.wikimedia.org/wiki/File:Pandero_Honsuy.JPG"
+      }
+    },
+    "piano": {
+      "fotografia": {
+        "autor": "Steinway & Sons",
+        "fecha": "2012-08-04",
+        "licencia": "CC-BY-SA-3.0",
+        "pagina": "https://commons.wikimedia.org/w/index.php?oldid=1119311679"
+      }
+    },
+    "platillos": {
+      "fotografia": {
+        "autor": "Andrewa",
+        "licencia": "CC-BY-SA-3.0",
+        "pagina": "https://commons.wikimedia.org/w/index.php?oldid=861720389"
+      }
+    },
+    "sintetizador": {
+      "fotografia": {
+        "autor": "English Wikipedia user 909 bd",
+        "fecha": "2006-09-21",
+        "licencia": "CC-BY-SA-3.0",
+        "pagina": "https://commons.wikimedia.org/wiki/File:SH-101.jpg"
+      }
+    },
+    "sonajero": {
+      "fotografia": {
+        "autor": "Calapito, obra derivada de RoRo",
+        "licencia": "CC-BY-3.0",
+        "pagina": "https://commons.wikimedia.org/w/index.php?oldid=1181274855"
+      }
+    },
+    "tabla": {
+      "fotografia": {
+        "autor": "The Metropolitan Museum of Art",
+        "licencia": "CC0-1.0",
+        "pagina": "https://www.metmuseum.org/art/collection/search/500712"
+      },
+      "instrumento": {
+        "museo": "The Metropolitan Museum of Art, Nueva York",
+        "coleccion": "The Crosby Brown Collection of Musical Instruments, 1889",
+        "inventario": "89.4.166 (dayan), 89.4.167 (bayan)",
+        "fecha": "finales del siglo XIX",
+        "procedencia": "India"
+      }
+    },
+    "teclado": {
+      "fotografia": {
+        "autor": "Moribunt, obra derivada de Atlantictire",
+        "fecha": "2005-05-11",
+        "licencia": "CC-BY-SA-3.0",
+        "pagina": "https://commons.wikimedia.org/w/index.php?oldid=1165582614"
+      }
+    },
+    "theremin": {
+      "fotografia": {
+        "autor": "Hutschi",
+        "licencia": "CC-BY-SA-3.0",
+        "pagina": "https://commons.wikimedia.org/w/index.php?oldid=1233932352"
+      }
+    },
+    "timbales": {
+      "fotografia": {
+        "autor": "Lefima GmbH",
+        "fecha": "2013-01-18",
+        "licencia": "CC-BY-SA-3.0",
+        "pagina": "https://commons.wikimedia.org/w/index.php?oldid=821921644"
+      }
+    },
+    "triangulo": {
+      "fotografia": {
+        "autor": "Anonimo (autor desconocido en la ficha de Commons)",
+        "licencia": "CC-BY-SA-4.0",
+        "pagina": "https://commons.wikimedia.org/w/index.php?oldid=1121163740"
+      }
+    },
+    "trombon": {
+      "fotografia": {
+        "autor": "Yamaha Corporation",
+        "licencia": "CC-BY-SA-4.0",
+        "pagina": "https://commons.wikimedia.org/w/index.php?oldid=866692623"
+      }
+    },
+    "trompa": {
+      "fotografia": {
+        "autor": "BenP",
+        "licencia": "CC-BY-2.5",
+        "pagina": "https://commons.wikimedia.org/w/index.php?oldid=647100383"
+      }
+    },
+    "trompeta": {
+      "fotografia": {
+        "autor": "Yamaha Corporation",
+        "licencia": "CC-BY-SA-4.0",
+        "pagina": "https://commons.wikimedia.org/w/index.php?oldid=996443397"
+      }
+    },
+    "tuba": {
+      "fotografia": {
+        "autor": "Yamaha Corporation",
+        "licencia": "CC-BY-SA-4.0",
+        "pagina": "https://commons.wikimedia.org/w/index.php?oldid=1070774619"
+      }
+    },
+    "ukelele": {
+      "fotografia": {
+        "autor": "The Metropolitan Museum of Art",
+        "licencia": "CC0-1.0",
+        "pagina": "https://commons.wikimedia.org/w/index.php?oldid=779908531"
+      },
+      "instrumento": {
+        "museo": "The Metropolitan Museum of Art, Nueva York",
+        "coleccion": "The Crosby Brown Collection of Musical Instruments, 1889",
+        "inventario": "89.4.727",
+        "fecha": "ca. 1880",
+        "procedencia": "Hawái"
+      }
+    },
+    "xilofono": {
+      "fotografia": {
+        "autor": "Ferbr1",
+        "fecha": "2012-02-06",
+        "licencia": "CC-BY-SA-3.0",
+        "pagina": "https://commons.wikimedia.org/wiki/File:Tres_xil%C3%B3fonos.JPG"
+      }
+    },
+    "zambomba": {
+      "fotografia": {
+        "autor": "Soinuenea",
+        "fecha": "2018-07-27",
+        "licencia": "CC-BY-SA-4.0",
+        "pagina": "https://commons.wikimedia.org/wiki/File:Zanbonba.jpg"
+      }
+    },
+    "ondas-martenot": {
+      "fotografia": {
+        "autor": "Christian Braut; recorte retocado digitalmente",
+        "fecha": "2016-01-12",
+        "licencia": "CC-BY-SA-4.0",
+        "pagina": "https://commons.wikimedia.org/w/index.php?oldid=1244036489"
+      }
+    }
+  }
+}

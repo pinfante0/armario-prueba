@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>¿De qué tamaño se pueden dibujar los iconos?</title>
+    <link rel="stylesheet" href="pruebas.css" />
+  </head>
+  <body>
+    <h1>¿De qué tamaño se pueden dibujar los iconos?</h1>
+
+    <p>
+      La Fase 6 pide iconos <strong>reconocibles a 60 px</strong> y una ficha mide hoy entre 30 y 40
+      px de alto. Los dos números no caben juntos, así que antes de dibujar cincuenta y nueve
+      dibujos hay que saber de qué tamaño se pueden dibujar. Esta página lo mide sobre los tableros
+      de verdad, con un <strong>icono de mentira</strong> que solo sirve para ocupar sitio: de dónde
+      salen los dibujos buenos es otra conversación, y esta no la prejuzga.
+    </p>
+    <p>
+      Un tamaño <strong>pasa</strong> si se cumplen dos cosas a la vez: que la pantalla siga
+      cabiendo —las reglas de siempre, medidas con la misma vara que las otras dos páginas— y que
+      <strong>el dibujo se pinte entero</strong>. Lo segundo hace falta porque
+      <code>.ficha</code> lleva <code>overflow: hidden</code>: un icono demasiado grande no desborda
+      la pantalla, se corta por la mitad sin que nadie se queje. Sería un resultado que se parece a
+      un aprobado.
+    </p>
+    <p>
+      Y se mide en <strong>dos estados</strong>. Sin dibujos el más justo es el primero, con el
+      montón lleno, y eso está medido desde la Fase 4; con dibujos ese argumento deja de valer,
+      porque con el montón lleno los huecos del armario están vacíos y no cuestan dibujo. Cuál de
+      los dos aprieta es justo la pregunta.
+    </p>
+    <p>
+      Esto <strong>no comprueba nada</strong>: mide. Existe por lo mismo que
+      <code>resolver.py --ver</code>. La corre sola
+      <code>python herramientas/medir_iconos.py</code>.
+    </p>
+
+    <pre id="informe">Midiendo…</pre>
+
+    <h2>Los marcos, en su techo</h2>
+    <p>
+      Cada marco se queda con el mayor icono que le cabe, apilado sobre el nombre. No forma parte de
+      la medición: está para contestar con los ojos la pregunta que los números no contestan, que es
+      si a ese tamaño se reconoce algo.
+    </p>
+    <div id="marcos"></div>
+
+    <h2>La criba</h2>
+    <p>
+      De los 1440 tableros se miden solo los que peor lo llevan, y este marco es donde se han
+      cribado: por cada plantilla y armario, el que menos sitio libre deja y el que más piezas
+      reparte.
+    </p>
+    <div id="criba"></div>
+
+    <script type="module" src="iconos.js"></script>
+  </body>
+</html>

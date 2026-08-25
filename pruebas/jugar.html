@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>¿Se puede jugar tocando?</title>
+    <link rel="stylesheet" href="pruebas.css" />
+  </head>
+  <body>
+    <h1>¿Se puede jugar tocando?</h1>
+
+    <p>
+      Colocar una pieza es <strong>tocar la pieza y tocar el hueco</strong>, y no arrastrar: arrastrar
+      en web táctil pelea con el desplazamiento del dedo y no hay forma de hacerlo con el teclado ni
+      con un lector de pantalla. <code>docs/fases.md</code> marca esta interacción como no delegable,
+      así que tiene su propia comprobación en vez de fiarse de que se ve bien.
+    </p>
+    <p>
+      Esta página resuelve tableros <em>haciendo clic en botones del documento</em>, sin llamar al
+      estado por dentro: es lo único que demuestra que el estado, la pantalla y los toques están
+      unidos. La corre sola <code>python herramientas/comprobar_pantalla.py</code>.
+    </p>
+
+    <pre id="informe">Jugando…</pre>
+
+    <h2>Donde se ha jugado</h2>
+    <p>Queda el último tablero de la prueba, para poder tocarlo a mano.</p>
+    <div id="marcos"></div>
+
+    <script type="module" src="jugar.js"></script>
+  </body>
+</html>

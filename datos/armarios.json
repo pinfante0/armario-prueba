@@ -1,0 +1,26 @@
+{
+  "_": "De quien es el armario. No decide que hay dentro: decide los empates.",
+  "_contrato": "docs/contrato_datos.md",
+  "_aviso": "Un instrumento con dos usos cae en el que su armario prioriza. Por eso la guitarra es escolar en el aula y popular en la casa del pueblo, que es lo que el juego ensena.",
+
+  "armarios": [
+    {
+      "id": "aula",
+      "nombre": "El aula de música",
+      "contexto": "El armario del colegio. Dentro hay lo que compró el centro y lo que fue dejando la gente.",
+      "prioridad": ["escolar", "popular", "sinfonico"]
+    },
+    {
+      "id": "auditorio",
+      "nombre": "El auditorio",
+      "contexto": "El almacén donde la orquesta guarda lo suyo, y algún trasto que nadie reclama.",
+      "prioridad": ["sinfonico", "popular", "escolar"]
+    },
+    {
+      "id": "casa-pueblo",
+      "nombre": "La casa del pueblo",
+      "contexto": "El local de la banda y del grupo de baile, con lo que va sobrando de las fiestas.",
+      "prioridad": ["popular", "escolar", "sinfonico"]
+    }
+  ]
+}

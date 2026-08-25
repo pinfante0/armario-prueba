@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>¿Caben los dibujos en su caja?</title>
+    <link rel="stylesheet" href="pruebas.css" />
+  </head>
+  <body>
+    <h1>¿Caben los dibujos en su caja?</h1>
+
+    <p>
+      La forma de fallo más cara de este proyecto es la que no se queja, y en los dibujos tiene
+      nombre: la ficha lleva <code>overflow: hidden</code>, así que un trazo que se sale del
+      <code>viewBox</code> <strong>no desborda a la vista, se corta en silencio</strong>. En la
+      tanda 2 los nueve cordófonos se pasaban <strong>0,2 px por abajo</strong> —la línea de suelo
+      estaba en 39 y el medio trazo de 1,2 caía en 40,2— y no se vio en ninguna captura: se cazó
+      recorriendo el trazado a mano, o sea una vez.
+    </p>
+    <p>
+      Aquí se mide cada símbolo de <code>datos/iconos.svg</code> con <code>getBBox</code> y el trazo
+      contado, que es lo que se sale. Y de paso dos cosas que tampoco se quejan: que el
+      <code>viewBox</code> sea <code>0 0 40 40</code> en todos —si no, «nada macizo por debajo de
+      1,8» deja de querer decir lo mismo en cada uno— y que el id de cada símbolo sea el de una
+      pieza jugable, porque un id mal escrito no rompe nada: solo hace que ese dibujo no lo vea
+      nadie.
+    </p>
+    <p>
+      La corre sola <code>python herramientas/comprobar_pantalla.py</code>.
+    </p>
+
+    <pre id="informe">Midiendo…</pre>
+
+    <h2>El taller donde se ha medido</h2>
+    <p>
+      Los símbolos, pintados grandes para poder mirar con los ojos lo que los números acaban de
+      decir. No forma parte de la comprobación, y los tres primeros son los casos que tienen que
+      dar mal.
+    </p>
+    <div id="taller" class="taller"></div>
+
+    <script type="module" src="dibujos.js"></script>
+  </body>
+</html>

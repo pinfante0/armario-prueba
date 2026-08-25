@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>¿Aguanta el armazón?</title>
+    <link rel="stylesheet" href="pruebas.css" />
+  </head>
+  <body>
+    <h1>¿Aguanta el armazón?</h1>
+
+    <p>
+      Las pantallas que llegaron con la Fase 3 —el menú, los ajustes y los créditos— medidas con la
+      misma vara que el tablero: <strong>ninguna se desplaza</strong>, con suelo en 320 px de ancho, y
+      de <code>web/datos/</code> <strong>solo sale el campo <code>nombre</code></strong>.
+    </p>
+    <p>
+      Y lo que es nuevo de verdad: <strong>el progreso</strong>, que es la primera cosa de este juego
+      que sobrevive a la partida y de las que se rompen sin hacer ruido. Un contador que suma de más
+      sigue enseñando un número creíble, así que aquí se le pide lo que promete: que una pieza cuente
+      una sola vez por tablero, que se juzgue por eje —una pieza puede estar en la fila que le toca y
+      en la columna que no—, que lo que se queda en el montón no cuente, y que cuando el navegador no
+      deje guardar el juego siga jugándose y lo diga.
+    </p>
+    <p>
+      Nada de esto toca el navegador de quien la abre: los almacenes son de mentira y viven en un
+      <code>Map</code>. La corre sola <code>python herramientas/comprobar_pantalla.py</code>.
+    </p>
+
+    <pre id="informe">Midiendo…</pre>
+
+    <h2>Los marcos, tal y como se han medido</h2>
+    <p>
+      Aquí abajo queda la última pantalla que se midió en cada tamaño. No forma parte de la
+      comprobación: está para poder mirar con los ojos lo que los números acaban de decir.
+    </p>
+    <div id="marcos"></div>
+
+    <script type="module" src="armazon.js"></script>
+  </body>
+</html>
